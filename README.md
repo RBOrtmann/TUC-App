@@ -12,3 +12,4 @@ Repository for TUC companion app.
 * In general, do __NOT__ mess with the theme, you're only making things worse for yourself.
 * Using floating action buttons might look/act nicer for some of the toggles; just need to use `OnTouchListener()` instead of `OnClickListener()`. There are also arrow drawables in resources that would be perfect for the d-pad.
 * Preference objects DO update SharedPreferences, but they're saved in a default file that I don't know the name of. Use `PreferenceManager.getDefaultSharedPreferences(***context here***)` to access these. Context should either be `this` or `getApplicationContext()`.
+* To have custom colors for different button states, add a drawable `.xml` file like `bg_button.xml`
