@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 if(etPassword.getText().toString().equals(PreferenceManager.getDefaultSharedPreferences(
                         getApplicationContext()).getString("password", "admin"))){
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), SelectionActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed.", Toast.LENGTH_SHORT).show();
                 }

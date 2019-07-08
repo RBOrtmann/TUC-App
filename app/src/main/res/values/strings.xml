@@ -30,4 +30,6 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="password_hint">Enter password…</string>
     <string name="login_text">Log In</string>
+    <string name="controller_text">Controller</string>
+    <string name="settings_text">Settings</string>
 </resources>
