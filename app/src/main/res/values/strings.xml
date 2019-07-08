@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">TUC App</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
     <string name="tuc_settings_header">TUC Settings</string>
     <string name="app_settings_header">App Settings</string>
 
@@ -16,18 +13,10 @@
     <string name="dark_mode_summary_off">Dark theme disabled</string>
 
     <!-- TUC Preferences -->
-    <string name="tuc_mode_title">TUC Mode</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="password_hint">Enter password…</string>
     <string name="login_text">Log In</string>
     <string name="controller_text">Controller</string>

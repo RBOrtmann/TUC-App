@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -30,4 +31,22 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
     }
+
+//    @Override
+//    protected void onStop(){
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+//        if(sp.getString("password", "admin").length() == 0){
+//            sp.edit().putString("password", "admin").apply();
+//        }
+//        super.onStop();
+//    }
+//
+//    @Override
+//    protected void onDestroy(){
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+//        if(sp.getString("password", "admin").length() == 0){
+//            sp.edit().putString("password", "admin").apply();
+//        }
+//        super.onDestroy();
+//    }
 }

@@ -20,10 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,7 +28,7 @@
             android:id="@+id/btnPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorLogin"
+            android:background="@drawable/bg_button"
             android:text="@string/login_text"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="@id/etPassword"
@@ -50,7 +46,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" tools:targetApi="o"/>
+            app:layout_constraintTop_toTopOf="parent" tools:targetApi="o" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
