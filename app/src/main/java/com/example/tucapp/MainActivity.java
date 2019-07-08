@@ -1,5 +1,6 @@
 package com.example.tucapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import android.provider.Settings;
 import android.text.Editable;
@@ -31,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
         final Button btnPassword = findViewById(R.id.btnPassword);
         final EditText etPassword = findViewById(R.id.etPassword);
 
-        Toast.makeText(this, getSharedPreferences("com.example.tucapp", MODE_PRIVATE).getString("password", "admin"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, getPreferences(MODE_PRIVATE).getString("password", "admin"), Toast.LENGTH_SHORT).show();
 
         btnPassword.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(etPassword.getText().toString().equals(getSharedPreferences("com.example.tucapp", MODE_PRIVATE).getString("password", "admin"))){
+                if(etPassword.getText().toString().equals(PreferenceManager.getDefaultSharedPreferences(
+                        getApplicationContext()).getString("password", "admin"))){
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed.", Toast.LENGTH_SHORT).show();
@@ -73,26 +76,26 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            startActivity(new Intent(this, SettingsActivity.class));
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }
