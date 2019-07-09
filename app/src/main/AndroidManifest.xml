@@ -13,7 +13,8 @@
         tools:ignore="AllowBackup">
         <activity android:name=".ControllerActivity"
             android:label="Controller"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:parentActivityName=".SelectionActivity"/>
         <activity android:name=".SelectionActivity"
             android:parentActivityName=".MainActivity"/>
         <activity

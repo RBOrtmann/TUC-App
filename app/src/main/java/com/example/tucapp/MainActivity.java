@@ -1,6 +1,5 @@
 package com.example.tucapp;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
@@ -41,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 if(etPassword.getText().toString().equals(PreferenceManager.getDefaultSharedPreferences(
                         getApplicationContext()).getString("password", "admin"))){
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
-                    //login();
-                    startActivity(new Intent(getApplicationContext(), SelectionActivity.class));
+                    login();
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed.", Toast.LENGTH_SHORT).show();
                 }

@@ -1,14 +1,9 @@
 package com.example.tucapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectionActivity extends AppCompatActivity {
 
@@ -17,9 +12,9 @@ public class SelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setEnterTransition(new Explode());
-        getWindow().setExitTransition(new Slide(Gravity.LEFT));
+//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        getWindow().setEnterTransition(new Explode());
+//        getWindow().setExitTransition(new Slide(Gravity.LEFT));
     }
 
     public void toController(View v){
