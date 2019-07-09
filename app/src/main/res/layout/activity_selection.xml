@@ -10,11 +10,12 @@
         android:id="@+id/btnToController"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="132dp"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="toController"
         android:text="@string/controller_text"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,10 +23,14 @@
         android:id="@+id/btnToSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="toSettings"
         android:text="@string/settings_text"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@id/btnToController"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/btnToController"
         app:layout_constraintTop_toBottomOf="@+id/btnToController" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

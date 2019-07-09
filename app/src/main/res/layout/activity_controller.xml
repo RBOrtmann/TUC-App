@@ -11,10 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="275dp"
         android:layout_marginEnd="16dp"
-        custom:JV_backgroundColor="#009688"
-        custom:JV_borderColor="#00796B"
+        custom:JV_backgroundColor="@color/colorPrimary"
+        custom:JV_borderColor="@color/colorPrimaryDark"
         custom:JV_borderWidth="4dp"
-        custom:JV_buttonColor="#FF6E40"
+        custom:JV_buttonColor="@color/colorAccent"
         custom:JV_buttonSizeRatio="15%"
         custom:JV_fixedCenter="false"
         custom:layout_constraintBottom_toBottomOf="parent"
@@ -28,47 +28,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/fabFloatDown"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fabFloatDown"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPowerUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/fabTiltDown"
         app:layout_constraintTop_toBottomOf="@+id/fabTiltDown"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/ic_arrow_upward_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabTiltUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="292dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/joystickView"
         app:layout_constraintStart_toEndOf="@+id/fabFloatDown"
         app:layout_constraintTop_toBottomOf="@+id/fabFloatDown"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabFloatDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/fabTiltUp"
         app:layout_constraintStart_toEndOf="@+id/fabTiltDown"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/ic_arrow_downward_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabWorklights"
@@ -76,11 +80,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        app:srcCompat="@drawable/ic_brightness_5_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPTO"
@@ -88,11 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        app:srcCompat="@drawable/ic_settings_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabFrontBack"
@@ -100,11 +106,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fabPowerDown"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        app:srcCompat="@drawable/ic_swap_horiz_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPowerDown"
@@ -112,11 +119,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fabPTO"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        app:srcCompat="@drawable/ic_arrow_downward_white_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabHeadlights"
@@ -125,11 +133,12 @@
         android:layout_marginStart="128dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fabWorklights"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
+        app:srcCompat="@drawable/ic_brightness_7_white_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
