@@ -24,15 +24,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="284dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="153dp"
+            android:layout_marginBottom="97dp"
+            app:layout_constraintBottom_toTopOf="@+id/etPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_logo_tuc_nodesc" />
+
         <Button
             android:id="@+id/btnPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@drawable/bg_button"
             android:text="@string/login_text"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="@id/etPassword"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/etPassword"
             app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
@@ -40,13 +54,14 @@
             android:id="@+id/etPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="322dp"
+            android:layout_marginTop="240dp"
             android:autofillHints="password"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" tools:targetApi="o" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="o" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
