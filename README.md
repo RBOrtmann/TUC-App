@@ -14,3 +14,5 @@ Repository for TUC companion app.
 * Preference objects DO update SharedPreferences, but they're saved in a default file that I don't know the name of. Use `PreferenceManager.getDefaultSharedPreferences(***context here***)` to access these. Context should either be `this` or `getApplicationContext()`.
 * To have custom colors for different button states, add a drawable `.xml` file like `bg_button.xml`
   * Helpful colors from [here](https://www.materialui.co/socialcolors)
+* Material design resources can be found [here](https://material.io/).
+  * [Icons](https://material.io/tools/icons/?style=baseline)
