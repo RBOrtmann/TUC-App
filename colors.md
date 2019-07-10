@@ -1,6 +1,6 @@
 # Colors
 | Name |  RAL | Hex |
-|----:|:----:|:----:|
+|:----|:----:|:----:|
 |[Ring-Co Black Gray](https://rgb.to/ral/7021) |7021|2f3234|
 |[Ring-Co Gray](https://rgb.to/ral/7037)       |7037|7a7b7a|
 |[Ring-Co Brown](https://rgb.to/ral/6025)      |6025|5e6e3b|
