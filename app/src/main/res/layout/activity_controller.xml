@@ -78,8 +78,8 @@
             android:id="@+id/fabTiltUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
-            android:layout_marginTop="98dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="96dp"
             android:backgroundTint="?attr/colorAccent"
             android:clickable="true"
             android:focusable="true"
@@ -181,6 +181,36 @@
             app:layout_constraintEnd_toStartOf="@+id/fabHeadlights"
             app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
             app:srcCompat="@drawable/ic_lightbulb_white" />
+
+        <TextView
+            android:id="@+id/txtPTO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pto_initial"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/fabPTO"
+            app:layout_constraintEnd_toEndOf="@+id/fabPTO"
+            app:layout_constraintStart_toStartOf="@+id/fabPTO" />
+
+        <TextView
+            android:id="@+id/txtLights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_off"
+            app:layout_constraintBottom_toTopOf="@+id/fabHeadlights"
+            app:layout_constraintEnd_toEndOf="@+id/fabHeadlights"
+            app:layout_constraintStart_toStartOf="@+id/fabHeadlights" />
+
+        <TextView
+            android:id="@+id/txtFrontBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_front"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/fabFrontBack"
+            app:layout_constraintEnd_toEndOf="@+id/fabFrontBack"
+            app:layout_constraintStart_toStartOf="@+id/fabFrontBack" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

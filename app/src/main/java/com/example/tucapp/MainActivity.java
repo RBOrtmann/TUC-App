@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Toast.makeText(this,
-                PreferenceManager.getDefaultSharedPreferences(this).getString("password", "admin"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,
+        //        PreferenceManager.getDefaultSharedPreferences(this).getString("password", "admin"), Toast.LENGTH_SHORT).show();
 
         onListeners();
     }
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO: FIX LOGIN
     private void login(){
         startActivity(new Intent(this, SelectionActivity.class)); //ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
     }

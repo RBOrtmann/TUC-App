@@ -12,6 +12,14 @@
     <string name="dark_mode_summary_on">Dark theme enabled</string>
     <string name="dark_mode_summary_off">Dark theme disabled</string>
 
+    <!-- Controller Text -->
+    <string name="pto_formatted">PTO: %s</string>
+    <string name="pto_initial">PTO: 0</string>
+    <string name="toggle_front">Front</string>
+    <string name="toggle_back">Back</string>
+    <string name="toggle_on">On</string>
+    <string name="toggle_off">Off</string>
+
     <!-- TUC Preferences -->
 
     <!-- Messages Preferences -->

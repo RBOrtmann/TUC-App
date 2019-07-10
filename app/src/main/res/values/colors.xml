@@ -3,6 +3,6 @@
     <color name="colorPrimary">#2f3234</color>
     <color name="colorSecondary">#7a7b7a</color>
     <color name="colorAccent">#5e6e3b</color>
-    <color name="colorLoginActive">#0084FF</color>
-    <color name="colorLoginInactive">#7D0084FF</color>
+    <color name="colorLoginActive">#0089b6</color>
+    <color name="colorLoginInactive">#8A0089B6</color>
 </resources>
