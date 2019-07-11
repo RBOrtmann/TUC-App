@@ -2,6 +2,9 @@ package com.example.tucapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -26,25 +29,22 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                // Handle the back button event
+//                finish();
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//            }
+//        };
+//        getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-//            Preference.OnPreferenceChangeListener opcl = new Preference.OnPreferenceChangeListener() {
-//                @Override
-//                public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                    if(PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext())).getBoolean("dark_mode", false)){
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                        return true;
-//                    } else {
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    }
-//                    return false;
-//                }
-//            };
-//            Objects.requireNonNull(findPreference("dark_mode")).setOnPreferenceChangeListener(opcl);
         }
     }
 
@@ -55,5 +55,12 @@ public class SettingsActivity extends AppCompatActivity {
             sp.edit().putString("password", "admin").apply();
         }
         super.onPause();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        return true;
     }
 }
