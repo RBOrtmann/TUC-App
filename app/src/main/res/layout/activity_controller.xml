@@ -26,12 +26,14 @@
         android:layout_height="250dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="142dp"
         app:JV_backgroundColor="@android:color/transparent"
         app:JV_borderColor="?attr/colorPrimary"
         app:JV_borderWidth="4dp"
         app:JV_buttonColor="?attr/colorAccent"
         app:JV_buttonSizeRatio="15%"
         app:JV_fixedCenter="false"
+        app:layout_constraintBottom_toBottomOf="@+id/togglesLayout"
         app:layout_constraintEnd_toEndOf="@+id/togglesLayout"
         app:layout_constraintTop_toTopOf="@+id/togglesLayout" />
 

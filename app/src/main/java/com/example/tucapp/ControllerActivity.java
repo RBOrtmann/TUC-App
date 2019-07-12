@@ -20,7 +20,7 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class ControllerActivity extends AppCompatActivity {
 
-    private int ptoCount = 0;
+    private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
 
     @Override
@@ -98,9 +98,9 @@ public class ControllerActivity extends AppCompatActivity {
 
     private void ptoCounter(){
         TextView tv = findViewById(R.id.txtPTO);
-        ptoCount++;
-        if(ptoCount > 5)
+        if(ptoCount >= 5)
             ptoCount = 0;
+        ptoCount++;
 
         tv.setText(getString(R.string.pto_formatted, Integer.toString(ptoCount)));
     }
