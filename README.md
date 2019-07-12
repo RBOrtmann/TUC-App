@@ -4,6 +4,7 @@ Repository for TUC companion app.
 ## Notes for final build
 * Do NOT use a `NoActionBar` theme. I want a consistent toolbar througout the app, which is best accomplished with the default toolbar.
 * Make sure to have `OnPreferenceChange()` return __true__ if I want the preference change to actually persist.
+  * This is unnecessary unless I need to do something specific at the exact time a preference is changed.
 * Can I use a `Snackbar` to inform the user that they're not connected to the right WiFi network when selecting Controller from the Connection Screen?
 * `androidx.preference.PreferenceScreen` pretty much sucks, so don't rely on it more than is necessary.
 * For the `ListPreference` component, both the `entries` and `entryValues` attributes are necessary. These may be defined in res/values/arrays.xml.
