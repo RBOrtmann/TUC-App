@@ -51,9 +51,8 @@
             tools:targetApi="o" />
 
         <ImageView
-            android:id="@+id/imgJustTUC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="296dp"
+            android:layout_height="148dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="106dp"
             android:layout_marginEnd="50dp"
@@ -61,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_tuc_justtuc" />
+            app:srcCompat="@drawable/ic_tuc_by_ring_co_color" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -14,4 +14,24 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string-array name="language_names">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="user_mode_names">
+        <item>Pro Mode</item>
+        <item>Companion Mode</item>
+    </string-array>
+
+    <string-array name="user_mode_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

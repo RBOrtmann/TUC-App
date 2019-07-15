@@ -20,12 +20,20 @@
 
         <EditTextPreference
             app:key="password"
-            app:title="@string/password_title"
+            app:title="Password"
             app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:key="language"
+            app:title="Language"
+            app:defaultValue="1"
+            app:entries="@array/language_names"
+            app:entryValues="@array/language_values"
+            app:useSimpleSummaryProvider="true"/>
 
         <SwitchPreferenceCompat
             app:key="dark_mode"
-            app:title="@string/dark_mode_title"
+            app:title="Dark Mode"
             app:summaryOff="@string/dark_mode_summary_off"
             app:summaryOn="@string/dark_mode_summary_on"/>
 
@@ -39,6 +47,14 @@
             app:defaultValue="1"
             app:entries="@array/tuc_mode_names"
             app:entryValues="@array/tuc_mode_values"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:key="user_mode"
+            app:title="User Mode"
+            app:defaultValue="1"
+            app:entries="@array/user_mode_names"
+            app:entryValues="@array/user_mode_values"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

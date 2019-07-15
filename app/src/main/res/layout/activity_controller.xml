@@ -7,38 +7,35 @@
     tools:context=".ControllerActivity">
 
     <ImageView
-        android:id="@+id/imgBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:alpha=".13"
+        android:alpha=".06"
         android:contentDescription="@string/app_name"
+        android:tint="@color/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_rings_gray" />
+        app:srcCompat="@drawable/ic_ring_co_rings_black" />
 
     <io.github.controlwear.virtual.joystick.android.JoystickView
         android:id="@+id/joystickView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="305dp"
+        android:layout_height="293dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="142dp"
         app:JV_backgroundColor="@android:color/transparent"
         app:JV_borderColor="?attr/colorPrimary"
         app:JV_borderWidth="4dp"
         app:JV_buttonColor="?attr/colorAccent"
         app:JV_buttonSizeRatio="15%"
         app:JV_fixedCenter="false"
-        app:layout_constraintBottom_toBottomOf="@+id/togglesLayout"
         app:layout_constraintEnd_toEndOf="@+id/togglesLayout"
         app:layout_constraintTop_toTopOf="@+id/togglesLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dpadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,42 +100,36 @@
             app:srcCompat="@drawable/ic_tilt_down_white" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="32dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="88dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="116dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="172dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="173dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -173,36 +164,37 @@
             android:id="@+id/fabFrontBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            android:layout_marginStart="158dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="?attr/colorAccent"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fabWorklights"
+            app:layout_constraintEnd_toStartOf="@+id/fabLights"
             app:layout_constraintStart_toEndOf="@+id/fabPowerDown"
-            app:srcCompat="@drawable/ic_swap_horiz_white_24dp" />
+            app:srcCompat="@drawable/ic_swap_arrows_front" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabHeadlights"
+            android:id="@+id/fabLights"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            android:layout_marginStart="159dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="?attr/colorAccent"
             android:clickable="true"
             android:focusable="true"
+            android:tint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/fabWorklights"
-            app:srcCompat="@drawable/ic_lightbulb_outline_white_24dp" />
+            app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
+            app:srcCompat="@drawable/ic_car_light_off" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabPowerDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
+            android:layout_marginStart="158dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="?attr/colorAccent"
             android:clickable="true"
@@ -211,20 +203,6 @@
             app:layout_constraintEnd_toStartOf="@+id/fabFrontBack"
             app:layout_constraintStart_toEndOf="@+id/fabPTO"
             app:srcCompat="@drawable/ic_arrow_downward_white_24dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabWorklights"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="?attr/colorAccent"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fabHeadlights"
-            app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
-            app:srcCompat="@drawable/ic_lightbulb_white" />
 
         <TextView
             android:id="@+id/txtPTO"
@@ -235,25 +213,6 @@
             app:layout_constraintBottom_toTopOf="@+id/fabPTO"
             app:layout_constraintEnd_toEndOf="@+id/fabPTO"
             app:layout_constraintStart_toStartOf="@+id/fabPTO" />
-
-        <TextView
-            android:id="@+id/txtLights"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/toggle_off"
-            app:layout_constraintBottom_toTopOf="@+id/fabHeadlights"
-            app:layout_constraintEnd_toEndOf="@+id/fabHeadlights"
-            app:layout_constraintStart_toStartOf="@+id/fabHeadlights" />
-
-        <TextView
-            android:id="@+id/txtFrontBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/toggle_front"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/fabFrontBack"
-            app:layout_constraintEnd_toEndOf="@+id/fabFrontBack"
-            app:layout_constraintStart_toStartOf="@+id/fabFrontBack" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

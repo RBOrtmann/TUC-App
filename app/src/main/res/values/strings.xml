@@ -2,23 +2,17 @@
     <string name="app_name">TUC App</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
+    <!-- Preference Section Titles -->
     <string name="tuc_settings_header">TUC Settings</string>
     <string name="app_settings_header">App Settings</string>
 
     <!-- App Preferences -->
-    <string name="password_title">Password</string>
-    <string name="dark_mode_title">Dark Mode</string>
     <string name="dark_mode_summary_on">Dark theme enabled</string>
     <string name="dark_mode_summary_off">Dark theme disabled</string>
 
     <!-- Controller Text -->
     <string name="pto_formatted">PTO: %s</string>
     <string name="pto_initial">PTO: 0</string>
-    <string name="toggle_front">Front</string>
-    <string name="toggle_back">Back</string>
-    <string name="toggle_on">On</string>
-    <string name="toggle_off">Off</string>
 
     <!-- TUC Preferences -->
 
@@ -27,6 +21,4 @@
     <!-- Sync Preferences -->
     <string name="password_hint">Enter password…</string>
     <string name="login_text">Log In</string>
-    <string name="controller_text">Controller</string>
-    <string name="settings_text">Settings</string>
 </resources>
