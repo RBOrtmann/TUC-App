@@ -170,4 +170,12 @@ public class ControllerActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    public void companion(View v){
+        TextView tv = findViewById(R.id.textView);
+        if(tv.getText().toString().equals("") || tv.getText().toString().equals("false"))
+            tv.setText("true");
+        else
+            tv.setText("false");
+    }
 }

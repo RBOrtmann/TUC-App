@@ -52,6 +52,22 @@ public class SettingsActivity extends AppCompatActivity {
                     editText.setSelection(editText.getText().length());
                 }
             });
+
+            findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if(preference.equals(findPreference("dark_mode"))){
+                        if(newValue.equals(true)){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            return true;
+                        } else if(newValue.equals(false)){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
         }
     }
 

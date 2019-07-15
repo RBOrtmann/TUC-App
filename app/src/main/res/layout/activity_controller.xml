@@ -6,12 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".ControllerActivity">
 
+    <Button
+        android:id="@+id/btnCompanion"
+        android:layout_width="298dp"
+        android:layout_height="408dp"
+        android:alpha=".1"
+        android:backgroundTint="@color/colorAccent"
+        android:enabled="false"
+        android:onClick="companion"
+        app:layout_constraintBottom_toBottomOf="@+id/togglesLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="144dp"
+        android:enabled="false"
+        app:layout_constraintStart_toEndOf="@+id/btnCompanion"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha=".06"
         android:contentDescription="@string/app_name"
-        android:tint="@color/colorSecondary"
+        android:tint="?attr/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -27,7 +50,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         app:JV_backgroundColor="@android:color/transparent"
-        app:JV_borderColor="?attr/colorPrimary"
+        app:JV_borderColor="?attr/colorPrimaryDark"
         app:JV_borderWidth="4dp"
         app:JV_buttonColor="?attr/colorAccent"
         app:JV_buttonSizeRatio="15%"
@@ -36,6 +59,7 @@
         app:layout_constraintTop_toTopOf="@+id/togglesLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dpadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
