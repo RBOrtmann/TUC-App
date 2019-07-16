@@ -6,15 +6,18 @@
     <string name="tuc_settings_header">TUC Settings</string>
     <string name="app_settings_header">App Settings</string>
 
-    <!-- App Preferences -->
+    <!-- Preference Titles and Strings -->
+    <string name="dark_mode_title">Dark Mode</string>
     <string name="dark_mode_summary_on">Dark theme enabled</string>
     <string name="dark_mode_summary_off">Dark theme disabled</string>
+    <string name="password_title">Password</string>
+    <string name="tuc_mode_title">TUC Mode</string>
+    <string name="user_mode_title">User Mode</string>
+    <string name="language_title">Language</string>
 
     <!-- Controller Text -->
     <string name="pto_formatted">PTO: %s</string>
     <string name="pto_initial">PTO: 0</string>
-
-    <!-- TUC Preferences -->
 
     <!-- Messages Preferences -->
 
