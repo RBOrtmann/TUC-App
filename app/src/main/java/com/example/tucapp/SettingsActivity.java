@@ -1,17 +1,13 @@
 package com.example.tucapp;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
@@ -50,8 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
                     editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     editText.setMaxLines(1);
                     editText.setSelection(editText.getText().length());
+                    editText.setHint("Enter a password...");
                 }
             });
+
 
             findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -76,15 +74,14 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if(sp.getString("password", "admin").length() == 0){
             sp.edit().putString("password", "admin").apply();
-            Toast.makeText(this, "Password reset to default", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password reset.", Toast.LENGTH_SHORT).show();
         }
         super.onPause();
     }
 
     @Override
     public boolean onSupportNavigateUp(){
-        onBackPressed();
-        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
         return true;
     }
 }

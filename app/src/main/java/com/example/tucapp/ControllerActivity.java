@@ -1,8 +1,5 @@
 package com.example.tucapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
-import org.w3c.dom.Text;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
