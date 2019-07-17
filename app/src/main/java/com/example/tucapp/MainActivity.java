@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         && Build.VERSION.SDK_INT >= 26){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
+
+        // Use dark theme if enabled
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_mode", false))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         onListeners();
     }

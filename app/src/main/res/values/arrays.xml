@@ -5,7 +5,7 @@
         <item>Work</item>
         <item>Utility</item>
         <item>Sport</item>
-        <item>Limp</item>
+        <item>Emergency</item>
     </string-array>
 
     <string-array name="tuc_mode_values">

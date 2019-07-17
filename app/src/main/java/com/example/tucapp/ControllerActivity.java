@@ -40,21 +40,21 @@ public class ControllerActivity extends AppCompatActivity {
                 switch(view.getId()) {
                     case R.id.fabFloatDown:
                         // make boolean true
-                        return true;
+                        break;
                     case R.id.fabPowerDown:
                         // make boolean true
-                        return true;
+                        break;
                     case R.id.fabPowerUp:
                         // make boolean true
-                        return true;
+                        break;
                     case R.id.fabTiltUp:
                         // make bool true
-                        return true;
+                        break;
                     case R.id.fabTiltDown:
                         // make bool true
-                        return true;
+                        break;
                 }
-                return false;
+                return true;
             }
         };
         findViewById(R.id.fabFloatDown).setOnTouchListener(otl);
@@ -109,12 +109,10 @@ public class ControllerActivity extends AppCompatActivity {
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
                         companionOn();
-                        return true;
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                         companionOff();
-                        return true;
                     }
-                    return false;
+                    return true;
                 }
             });
         } else {

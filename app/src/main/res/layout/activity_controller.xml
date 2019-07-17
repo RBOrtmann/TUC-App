@@ -90,10 +90,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
+                android:tooltipText="Float bucket down"
                 app:layout_constraintBottom_toTopOf="@+id/fabPowerUp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_download_arrow" />
+                app:srcCompat="@drawable/ic_download_arrow" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabPowerUp"
@@ -105,9 +106,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
+                android:tooltipText="Power bucket up"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fabFloatDown"
-                app:srcCompat="@drawable/ic_up_arrow" />
+                app:srcCompat="@drawable/ic_up_arrow" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabTiltDown"
@@ -119,10 +121,11 @@
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
+                android:tooltipText="Tilt bucket down"
                 app:layout_constraintEnd_toStartOf="@+id/fabTiltUp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_tilt_up_white" />
+                app:srcCompat="@drawable/ic_tilt_up_white" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabTiltUp"
@@ -133,9 +136,10 @@
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
+                android:tooltipText="Tilt bucket up"
                 app:layout_constraintStart_toEndOf="@+id/fabTiltDown"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_tilt_down_white" />
+                app:srcCompat="@drawable/ic_tilt_down_white" tools:targetApi="o"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
@@ -189,10 +193,11 @@
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
+                android:tooltipText="Increase PTO level"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fabPowerDown"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_settings_white_24dp" />
+                app:srcCompat="@drawable/ic_settings_white_24dp" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabFrontBack"
@@ -203,10 +208,11 @@
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
+                android:tooltipText="Toggle attachments front/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fabLights"
                 app:layout_constraintStart_toEndOf="@+id/fabPowerDown"
-                app:srcCompat="@drawable/ic_swap_arrows_front" />
+                app:srcCompat="@drawable/ic_swap_arrows_front" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabLights"
@@ -219,10 +225,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
+                android:tooltipText="Toggle lights on/off"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
-                app:srcCompat="@drawable/ic_car_light_off" />
+                app:srcCompat="@drawable/ic_car_light_off" tools:targetApi="o"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabPowerDown"
@@ -234,10 +241,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
+                android:tooltipText="Power bucket down"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fabFrontBack"
                 app:layout_constraintStart_toEndOf="@+id/fabPTO"
-                app:srcCompat="@drawable/ic_arrow_float_down" />
+                app:srcCompat="@drawable/ic_arrow_float_down" tools:targetApi="o"/>
 
             <TextView
                 android:id="@+id/txtPTO"
