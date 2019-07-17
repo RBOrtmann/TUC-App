@@ -25,7 +25,7 @@ public class SelectionActivity extends AppCompatActivity {
     public void toController(View v){
         WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if(wfMan.getConnectionInfo().getSSID().contains("Ring-Co")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
-            startActivity(new Intent(this, ControllerActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            startActivity(new Intent(this, ControllerActivity.class));
         } else {
             Toast.makeText(this, "Please connect to a TUC network.", Toast.LENGTH_SHORT).show();
         }

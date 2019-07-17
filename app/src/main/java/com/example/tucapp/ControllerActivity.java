@@ -124,6 +124,20 @@ public class ControllerActivity extends AppCompatActivity {
         }
     }
 
+    private void companionOn(){
+        JoystickView js = findViewById(R.id.joystickView);
+        //js.setEnabled(true);
+        TextView tv = findViewById(R.id.textView);
+        tv.setText("true");
+    }
+
+    private void companionOff(){
+        JoystickView js = findViewById(R.id.joystickView);
+        //js.setEnabled(false);
+        TextView tv = findViewById(R.id.textView);
+        tv.setText("false");
+    }
+
     private void ptoCounter(){
         TextView tv = findViewById(R.id.txtPTO);
         ptoCount++;
@@ -200,25 +214,11 @@ public class ControllerActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 //Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             default:
                 break;
         }
         return false;
-    }
-
-    private void companionOn(){
-        JoystickView js = findViewById(R.id.joystickView);
-        //js.setEnabled(true);
-        TextView tv = findViewById(R.id.textView);
-        tv.setText("true");
-    }
-
-    private void companionOff(){
-        JoystickView js = findViewById(R.id.joystickView);
-        //js.setEnabled(false);
-        TextView tv = findViewById(R.id.textView);
-        tv.setText("false");
     }
 }

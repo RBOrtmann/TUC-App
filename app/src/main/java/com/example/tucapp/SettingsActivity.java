@@ -51,7 +51,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-
             findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
