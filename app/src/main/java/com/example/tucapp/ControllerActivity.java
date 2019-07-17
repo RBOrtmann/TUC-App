@@ -1,5 +1,6 @@
 package com.example.tucapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -195,11 +196,11 @@ public class ControllerActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.action_settings:
                 //Toast.makeText(this, "Settings selected...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivity(new Intent(this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 return true;
             case R.id.action_logout:
                 //Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, MainActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 return true;
             default:
                 break;

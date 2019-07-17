@@ -1,6 +1,7 @@
 package com.example.tucapp;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -77,6 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(){
-        startActivity(new Intent(this, SelectionActivity.class)); //ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+        startActivity(new Intent(this, SelectionActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }
