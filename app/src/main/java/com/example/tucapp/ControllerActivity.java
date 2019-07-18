@@ -103,7 +103,7 @@ public class ControllerActivity extends AppCompatActivity {
         final JoystickView js = findViewById(R.id.joystickView);
 
         if(PreferenceManager.getDefaultSharedPreferences(this).getString("user_mode", "1").equals("2")){
-            js.setEnabled(false);
+            disableJoystick();
             btn.setEnabled(true);
             btn.setVisibility(View.VISIBLE);
 
@@ -120,9 +120,9 @@ public class ControllerActivity extends AppCompatActivity {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
-                        companionOn();
+                        enableJoystick();
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
-                        companionOff();
+                        disableJoystick();
                     }
                     return true;
                 }
@@ -134,13 +134,15 @@ public class ControllerActivity extends AppCompatActivity {
         }
     }
 
-    private void companionOn(){
+    private void enableJoystick(){
         JoystickView js = findViewById(R.id.joystickView);
+        js.setAlpha(1f);
         js.setEnabled(true);
     }
 
-    private void companionOff(){
+    private void disableJoystick(){
         JoystickView js = findViewById(R.id.joystickView);
+        js.setAlpha(.35f);
         js.setEnabled(false);
     }
 
