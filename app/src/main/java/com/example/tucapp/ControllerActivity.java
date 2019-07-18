@@ -1,5 +1,6 @@
 package com.example.tucapp;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,25 +87,36 @@ public class ControllerActivity extends AppCompatActivity {
         findViewById(R.id.fabLights).setOnClickListener(ocl);
 
         // JOYSTICK
-        JoystickView joystick = findViewById(R.id.joystickView);
+        final JoystickView joystick = findViewById(R.id.joystickView);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
                 // Do stuff here
             }
         });
+
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void companionListener(){
         Button btn = findViewById(R.id.btnCompanion);
-        JoystickView js = findViewById(R.id.joystickView);
+        final JoystickView js = findViewById(R.id.joystickView);
+
         if(PreferenceManager.getDefaultSharedPreferences(this).getString("user_mode", "1").equals("2")){
-            //js.setEnabled(false);
+            js.setEnabled(false);
             btn.setEnabled(true);
             btn.setVisibility(View.VISIBLE);
 
+            btn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(b)
+                        js.requestFocus();
+                }
+            });
+
             // COMPANION
-            findViewById(R.id.btnCompanion).setOnTouchListener(new View.OnTouchListener() {
+            btn.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
@@ -124,16 +136,12 @@ public class ControllerActivity extends AppCompatActivity {
 
     private void companionOn(){
         JoystickView js = findViewById(R.id.joystickView);
-        //js.setEnabled(true);
-        TextView tv = findViewById(R.id.textView);
-        tv.setText("true");
+        js.setEnabled(true);
     }
 
     private void companionOff(){
         JoystickView js = findViewById(R.id.joystickView);
-        //js.setEnabled(false);
-        TextView tv = findViewById(R.id.textView);
-        tv.setText("false");
+        js.setEnabled(false);
     }
 
     private void ptoCounter(){
