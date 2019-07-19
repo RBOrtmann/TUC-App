@@ -1,11 +1,9 @@
 package com.example.tucapp;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.transition.Explode;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,15 +13,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.preference.EditTextPreference;
-import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import java.util.List;
 import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -57,17 +51,6 @@ public class SettingsActivity extends AppCompatActivity {
                     editText.setHint("Enter a password...");
                 }
             });
-
-            edp.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-//                    getPreferenceManager().showDialog(edp);
-
-                    return true;
-                }
-            });
-
-
 
             findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
