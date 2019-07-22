@@ -10,21 +10,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class SelectionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
-
-//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//        getWindow().setEnterTransition(new Explode());
-//        getWindow().setExitTransition(new Slide(Gravity.LEFT));
     }
 
     public void toController(View v){
         WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if(wfMan.getConnectionInfo().getSSID().contains("Ring-Co")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
+        if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("Ring-Co")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
             startActivity(new Intent(this, ControllerActivity.class));
         } else {
             Toast.makeText(this, "Please connect to a TUC network.", Toast.LENGTH_SHORT).show();

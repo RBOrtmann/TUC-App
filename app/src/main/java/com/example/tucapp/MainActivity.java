@@ -44,24 +44,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void onListeners(){
 
-        final Button btnPassword = findViewById(R.id.btnPassword);
-        btnPassword.setEnabled(false);
-        final EditText etPassword = findViewById(R.id.etPassword);
-
-        btnPassword.setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.btnPassword).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(etPassword.getText().toString().equals(PreferenceManager.getDefaultSharedPreferences(
-                        getApplicationContext()).getString("password", "admin"))
-                        || etPassword.getText().toString().equals("overridepassword")){ // Override password should be changed
+                if(getPasswordText().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("password", SettingsActivity.getDefaultPassword()))
+                || getPasswordText().equals(SettingsActivity.getOverridePassword())){
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
-                    login();
+                    toSelection();
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        EditText etPassword = findViewById(R.id.etPassword);
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int before, int count) {
@@ -70,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.toString().trim().length() == 0){
-                    btnPassword.setEnabled(false);
+                    enableButton(false);
                 } else {
-                    btnPassword.setEnabled(true);
+                    enableButton(true);
                 }
             }
 
@@ -83,7 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void login(){
+    private void toSelection(){
         startActivity(new Intent(this, SelectionActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    private void enableButton(boolean b){
+        findViewById(R.id.btnPassword).setEnabled(b);
+    }
+
+    private String getPasswordText(){
+        EditText et = findViewById(R.id.etPassword);
+        return et.getText().toString();
     }
 }

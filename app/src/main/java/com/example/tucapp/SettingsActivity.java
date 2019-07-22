@@ -1,16 +1,13 @@
 package com.example.tucapp;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
@@ -21,6 +18,9 @@ import androidx.preference.PreferenceManager;
 import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private static String defaultPassword = "admin";
+    private static String overridePassword = "overridePassword";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            final EditTextPreference edp = findPreference("password");
+            EditTextPreference edp = findPreference("password");
             Objects.requireNonNull(edp).setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
                 @Override
                 public void onBindEditText(@NonNull EditText editText) {
@@ -74,8 +74,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if(sp.getString("password", "admin").length() == 0){
-            sp.edit().putString("password", "admin").apply();
+        if(sp.getString("password", defaultPassword).length() == 0){
+            sp.edit().putString("password", defaultPassword).apply();
             Toast.makeText(this, "Password reset.", Toast.LENGTH_SHORT).show();
         }
         super.onPause();
@@ -85,5 +85,12 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    protected static String getDefaultPassword(){
+        return defaultPassword;
+    }
+    protected static String getOverridePassword(){
+        return overridePassword;
     }
 }

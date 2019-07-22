@@ -100,7 +100,6 @@ public class ControllerActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void companionListener(){
         Button btn = findViewById(R.id.btnCompanion);
-        final JoystickView js = findViewById(R.id.joystickView);
 
         if(PreferenceManager.getDefaultSharedPreferences(this).getString("user_mode", "1").equals("2")){
             disableJoystick();
@@ -111,7 +110,7 @@ public class ControllerActivity extends AppCompatActivity {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if(b)
-                        js.requestFocus();
+                        findViewById(R.id.joystickView).requestFocus();
                 }
             });
 
@@ -130,7 +129,7 @@ public class ControllerActivity extends AppCompatActivity {
         } else {
             btn.setEnabled(false);
             btn.setVisibility(View.INVISIBLE);
-            js.setEnabled(true);
+            enableJoystick();
         }
     }
 
