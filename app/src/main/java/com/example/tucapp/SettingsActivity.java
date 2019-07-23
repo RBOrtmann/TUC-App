@@ -19,9 +19,6 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private static String defaultPassword = "admin";
-    private static String overridePassword = "overridePassword";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            Objects.requireNonNull(findPreference("dark_mode")).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if(preference.equals(findPreference("dark_mode"))){
@@ -74,8 +71,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if(sp.getString("password", defaultPassword).length() == 0){
-            sp.edit().putString("password", defaultPassword).apply();
+        if(sp.getString("password", getDefaultPassword()).length() == 0){
+            sp.edit().putString("password", getDefaultPassword()).apply();
             Toast.makeText(this, "Password reset.", Toast.LENGTH_SHORT).show();
         }
         super.onPause();
@@ -88,9 +85,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     protected static String getDefaultPassword(){
-        return defaultPassword;
+        return "admin";
     }
     protected static String getOverridePassword(){
-        return overridePassword;
+        return "overridepassword";
     }
 }

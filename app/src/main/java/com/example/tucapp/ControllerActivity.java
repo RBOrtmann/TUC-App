@@ -22,7 +22,7 @@ public class ControllerActivity extends AppCompatActivity {
 
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
-    private int lightMode = 0;
+    private int lightMode = 0; // 0 - 3
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
