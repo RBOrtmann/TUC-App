@@ -72,8 +72,8 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabFloatDown"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="116dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
@@ -92,10 +92,10 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabPowerUp"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="116dp"
-                android:layout_marginTop="116dp"
+                android:layout_marginTop="114dp"
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
@@ -109,38 +109,36 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabTiltDown"
                 android:layout_width="wrap_content"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="117dp"
                 android:layout_marginEnd="116dp"
-                android:layout_marginBottom="238dp"
+                android:layout_marginBottom="32dp"
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
                 android:tooltipText="Tilt bucket down"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toStartOf="@+id/fabTiltUp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline"
                 app:srcCompat="@drawable/ic_tilt_up_white"
                 tools:targetApi="o" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabTiltUp"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="116dp"
-                android:layout_marginTop="117dp"
-                android:layout_marginBottom="238dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="?attr/colorAccent"
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@android:color/white"
                 android:tooltipText="Tilt bucket up"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline4"
                 app:layout_constraintStart_toEndOf="@+id/fabTiltDown"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
                 app:srcCompat="@drawable/ic_tilt_down_white"
                 tools:targetApi="o" />
 
@@ -151,12 +149,14 @@
                 app:layout_constraintGuide_begin="32dp" />
 
             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="88dp" />
 
             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -169,12 +169,14 @@
                 app:layout_constraintGuide_begin="172dp" />
 
             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="173dp" />
 
             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
