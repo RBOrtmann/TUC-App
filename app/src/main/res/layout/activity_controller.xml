@@ -61,6 +61,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
                 app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -207,6 +208,23 @@
                 tools:targetApi="o" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabPowerDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="158dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="?attr/colorAccent"
+                android:clickable="true"
+                android:focusable="true"
+                android:tint="@android:color/white"
+                android:tooltipText="Power bucket down"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fabFrontBack"
+                app:layout_constraintStart_toEndOf="@+id/fabPTO"
+                app:srcCompat="@drawable/ic_arrow_float_down"
+                tools:targetApi="o" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabFrontBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -239,23 +257,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/fabFrontBack"
                 app:srcCompat="@drawable/ic_car_light_off"
-                tools:targetApi="o" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabPowerDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="158dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="?attr/colorAccent"
-                android:clickable="true"
-                android:focusable="true"
-                android:tint="@android:color/white"
-                android:tooltipText="Power bucket down"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fabFrontBack"
-                app:layout_constraintStart_toEndOf="@+id/fabPTO"
-                app:srcCompat="@drawable/ic_arrow_float_down"
                 tools:targetApi="o" />
 
             <TextView
