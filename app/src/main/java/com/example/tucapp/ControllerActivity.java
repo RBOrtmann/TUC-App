@@ -2,6 +2,7 @@ package com.example.tucapp;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,9 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class ControllerActivity extends AppCompatActivity {
@@ -23,6 +27,9 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
+    private ByteBuffer bb = ByteBuffer.allocateDirect(10);
+    private IntBuffer ib = bb.asIntBuffer();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,8 @@ public class ControllerActivity extends AppCompatActivity {
 
         onListeners();
         companionListener();
+
+        ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
     public void onListeners(){
@@ -38,23 +47,37 @@ public class ControllerActivity extends AppCompatActivity {
         View.OnTouchListener otl = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(view.getId()) {
-                    case R.id.fabFloatDown:
-                        // make boolean true
-                        break;
-                    case R.id.fabPowerDown:
-                        // make boolean true
-                        break;
-                    case R.id.fabPowerUp:
-                        // make boolean true
-                        break;
-                    case R.id.fabTiltUp:
-                        // make bool true
-                        break;
-                    case R.id.fabTiltDown:
-                        // make bool true
-                        break;
+                if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    switch (view.getId()) {
+                        case R.id.fabFloatDown:
+                            ib.put(2, 1);
+                            break;
+                        case R.id.fabPowerDown:
+                            ib.put(3, 1);
+                            break;
+                        case R.id.fabPowerUp:
+                            ib.put(4, 1);
+                            break;
+                        case R.id.fabTiltUp:
+                            ib.put(5, 1);
+                            break;
+                        case R.id.fabTiltDown:
+                            ib.put(6, 1);
+                            break;
+                    }
+
+                    sendIntBuff();
+
+                } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
+                    ib.put(2, 0);
+                    ib.put(3, 0);
+                    ib.put(4, 0);
+                    ib.put(5, 0);
+                    ib.put(6, 0);
+                    sendIntBuff();
+                    view.performClick();
                 }
+
                 return true;
             }
         };
@@ -70,15 +93,16 @@ public class ControllerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch(view.getId()){
                     case R.id.fabPTO:
-                        ptoCounter();
+                        ib.put(ptoCounter());
                         break;
                     case R.id.fabFrontBack:
-                        frontBack();
+                        ib.put(frontBack());
                         break;
                     case R.id.fabLights:
-                        toggleLights();
+                        ib.put(toggleLights());
                         break;
                 }
+                sendIntBuff();
             }
         };
 
@@ -92,6 +116,9 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public void onMove(int angle, int strength) {
                 // Do stuff here
+                ib.put(0, angle);
+                ib.put(1, strength);
+                sendIntBuff();
             }
         });
 
@@ -133,6 +160,12 @@ public class ControllerActivity extends AppCompatActivity {
         }
     }
 
+    private void sendIntBuff(){
+        while(getApplicationContext() == this){
+            // send ib to Thread here
+        }
+    }
+
     private void enableJoystick(){
         JoystickView js = findViewById(R.id.joystickView);
         js.setAlpha(1f);
@@ -145,25 +178,29 @@ public class ControllerActivity extends AppCompatActivity {
         js.setEnabled(false);
     }
 
-    private void ptoCounter(){
+    private int ptoCounter(){
         TextView tv = findViewById(R.id.txtPTO);
         ptoCount++;
         if(ptoCount > 5)
             ptoCount = 0;
 
         tv.setText(getString(R.string.pto_formatted, Integer.toString(ptoCount)));
+
+        return ptoCount;
     }
 
-    private void frontBack(){
+    private int frontBack(){
         FloatingActionButton fab = findViewById(R.id.fabFrontBack);
         frontBack = !frontBack;
         if(frontBack)
             fab.setImageDrawable(getDrawable(R.drawable.ic_swap_arrows_back));
         else
             fab.setImageDrawable(getDrawable(R.drawable.ic_swap_arrows_front));
+
+        return frontBack ? 1 : 0; // Converts boolean value to integer
     }
 
-    private void toggleLights(){
+    private int toggleLights(){
         FloatingActionButton fab = findViewById(R.id.fabLights);
         lightMode++;
         if(lightMode > 3)
@@ -178,6 +215,7 @@ public class ControllerActivity extends AppCompatActivity {
         else if(lightMode == 3)
             fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both));
 
+        return lightMode;
     }
 
     @Override
@@ -185,6 +223,8 @@ public class ControllerActivity extends AppCompatActivity {
         super.onResume();
         hideSystemUI();
         companionListener();
+        ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        sendIntBuff();
     }
 
     @Override
