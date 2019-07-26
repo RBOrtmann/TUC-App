@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         onListeners();
     }
 
-    public void onListeners(){
-
+    // Sets onClick listeners for on-screen Views
+    private void onListeners(){
         findViewById(R.id.btnPassword).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -79,14 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Sends intent to SelectionActivity
     private void toSelection(){
         startActivity(new Intent(this, SelectionActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
+    // Enables the login button only when there is text to check
     private void enableButton(boolean b){
         findViewById(R.id.btnPassword).setEnabled(b);
     }
 
+    // Gets text from password EditText
     private String getPasswordText(){
         EditText et = findViewById(R.id.etPassword);
         return et.getText().toString();

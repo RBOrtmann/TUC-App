@@ -20,6 +20,7 @@ public class SelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selection);
     }
 
+    // Checks WiFi connection for standard TUC naming convention, then sends intent to ControllerActivity
     public void toController(View v){
         WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("Ring-Co")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
@@ -29,6 +30,7 @@ public class SelectionActivity extends AppCompatActivity {
         }
     }
 
+    // Sends intent to SettingsActivity
     public void toSettings(View v){
         startActivity(new Intent(this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }

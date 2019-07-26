@@ -1,6 +1,7 @@
 package com.example.tucapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Application;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -19,6 +22,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -29,6 +37,7 @@ public class ControllerActivity extends AppCompatActivity {
     private int lightMode = 0; // 0 - 3
     private ByteBuffer bb = ByteBuffer.allocateDirect(10);
     private IntBuffer ib = bb.asIntBuffer();
+    private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>();
 
 
     @Override
@@ -36,13 +45,16 @@ public class ControllerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
 
+        new Thread(new Sender()).start();
+
         onListeners();
         companionListener();
 
         ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
-    public void onListeners(){
+    // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
+    private void onListeners(){
         // PRESS & HOLDS
         View.OnTouchListener otl = new View.OnTouchListener() {
             @Override
@@ -66,15 +78,12 @@ public class ControllerActivity extends AppCompatActivity {
                             break;
                     }
 
-                    sendIntBuff();
-
                 } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                     ib.put(2, 0);
                     ib.put(3, 0);
                     ib.put(4, 0);
                     ib.put(5, 0);
                     ib.put(6, 0);
-                    sendIntBuff();
                     view.performClick();
                 }
 
@@ -102,7 +111,6 @@ public class ControllerActivity extends AppCompatActivity {
                         ib.put(toggleLights());
                         break;
                 }
-                sendIntBuff();
             }
         };
 
@@ -118,12 +126,12 @@ public class ControllerActivity extends AppCompatActivity {
                 // Do stuff here
                 ib.put(0, angle);
                 ib.put(1, strength);
-                sendIntBuff();
             }
         });
 
     }
 
+    // If Companion Mode is enabled, this sets the listener for that View
     @SuppressLint("ClickableViewAccessibility")
     private void companionListener(){
         Button btn = findViewById(R.id.btnCompanion);
@@ -160,24 +168,21 @@ public class ControllerActivity extends AppCompatActivity {
         }
     }
 
-    private void sendIntBuff(){
-        while(getApplicationContext() == this){
-            // send ib to Thread here
-        }
-    }
-
+    // A method for enabling the Joystick
     private void enableJoystick(){
         JoystickView js = findViewById(R.id.joystickView);
         js.setAlpha(1f);
         js.setEnabled(true);
     }
 
+    // A method for disabling the Joystick
     private void disableJoystick(){
         JoystickView js = findViewById(R.id.joystickView);
         js.setAlpha(.35f);
         js.setEnabled(false);
     }
 
+    // Increments the PTO counter and returns its value
     private int ptoCounter(){
         TextView tv = findViewById(R.id.txtPTO);
         ptoCount++;
@@ -189,6 +194,7 @@ public class ControllerActivity extends AppCompatActivity {
         return ptoCount;
     }
 
+    // Switches the attachment mode to front if back, and to back if front, returning the value as an integer
     private int frontBack(){
         FloatingActionButton fab = findViewById(R.id.fabFrontBack);
         frontBack = !frontBack;
@@ -200,6 +206,7 @@ public class ControllerActivity extends AppCompatActivity {
         return frontBack ? 1 : 0; // Converts boolean value to integer
     }
 
+    // Increments the counter that keeps track of the light mode and returns it
     private int toggleLights(){
         FloatingActionButton fab = findViewById(R.id.fabLights);
         lightMode++;
@@ -218,13 +225,28 @@ public class ControllerActivity extends AppCompatActivity {
         return lightMode;
     }
 
+    // Subclass that continuously enqueues the ByteBuffer into the BlockingQueue
+    private class Sender implements Runnable{
+        @Override
+        public void run() {
+            try {
+                while(getClass().getSimpleName().equals("ControllerActivity.Sender")){
+                    bq.put(bb);
+                }
+            } catch(InterruptedException e){
+            }
+        }
+    }
+
+    /*
+    The next few methods deal almost entirely with how the Activity behaves, ensuring fullscreen and the like
+     */
     @Override
     public void onResume() {
         super.onResume();
         hideSystemUI();
         companionListener();
         ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
-        sendIntBuff();
     }
 
     @Override
@@ -235,6 +257,7 @@ public class ControllerActivity extends AppCompatActivity {
         }
     }
 
+    // Hides the system UI
     private void hideSystemUI() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
