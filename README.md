@@ -24,4 +24,3 @@ Repository for TUC companion app.
 * Angle/strength from virtual joystick will need to be converted to usable values.
 * Should data be sent back to the app from the TUC (speed, etc.)?
 * Should the app kick the user back to the selection or login screen if the TUC disconnects?
-* 
