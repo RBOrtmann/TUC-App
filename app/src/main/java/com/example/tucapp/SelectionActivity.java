@@ -1,4 +1,4 @@
-/**
+/*
  * File: SelectionActivity.java
  * Author: Brendan Ortmann
  * Owner: Ring-Co LLC

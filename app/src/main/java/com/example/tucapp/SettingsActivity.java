@@ -1,4 +1,4 @@
-/**
+/*
  * File: SettingsActivity.java
  * Author: Brendan Ortmann
  * Owner: Ring-Co LLC

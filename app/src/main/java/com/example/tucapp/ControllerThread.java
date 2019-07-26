@@ -1,4 +1,4 @@
-/**
+/*
  * File: ControllerThread.java
  * Author: Brendan Ortmann
  * Owner: Ring-Co LLC
