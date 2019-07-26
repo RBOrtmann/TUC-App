@@ -1,3 +1,13 @@
+/**
+ * File: ControllerActivity.java
+ * Author: Brendan Ortmann
+ * Owner: Ring-Co LLC
+ * For: TUC Companion App
+ * Date: July 2019
+ *
+ * Desc: "Controller" activity which provides an end-user interface for controlling the TUC.
+ */
+
 package com.example.tucapp;
 
 import android.annotation.SuppressLint;

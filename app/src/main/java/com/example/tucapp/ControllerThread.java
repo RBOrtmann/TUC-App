@@ -1,3 +1,13 @@
+/**
+ * File: ControllerThread.java
+ * Author: Brendan Ortmann
+ * Owner: Ring-Co LLC
+ * For: TUC Companion App
+ * Date: July 2019
+ *
+ * Desc: A thread for continuously sending information to the TUC while the app is connected to it. Retrieves data from ControllerActivity.
+ */
+
 package com.example.tucapp;
 
 import java.net.DatagramPacket;

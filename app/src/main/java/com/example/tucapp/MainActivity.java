@@ -1,3 +1,13 @@
+/**
+ * File: MainActivity.java
+ * Author: Brendan Ortmann
+ * Owner: Ring-Co LLC
+ * For: TUC Companion App
+ * Date: July 2019
+ *
+ * Desc: "Launcher" activity.
+ */
+
 package com.example.tucapp;
 
 import android.Manifest;
@@ -9,7 +19,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {

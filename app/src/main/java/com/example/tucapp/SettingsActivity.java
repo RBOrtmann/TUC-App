@@ -1,3 +1,13 @@
+/**
+ * File: SettingsActivity.java
+ * Author: Brendan Ortmann
+ * Owner: Ring-Co LLC
+ * For: TUC Companion App
+ * Date: July 2019
+ *
+ * Desc: "Settings" activity where users can change preferences for both the app and the TUC.
+ */
+
 package com.example.tucapp;
 
 import android.content.SharedPreferences;

@@ -1,3 +1,13 @@
+/**
+ * File: SelectionActivity.java
+ * Author: Brendan Ortmann
+ * Owner: Ring-Co LLC
+ * For: TUC Companion App
+ * Date: July 2019
+ *
+ * Desc: "Selection" activity where users can navigate to ControllerActivity or SettingsActivity.
+ */
+
 package com.example.tucapp;
 
 import android.app.ActivityOptions;
