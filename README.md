@@ -17,3 +17,11 @@ Repository for TUC companion app.
   * Helpful colors from [here](https://www.materialui.co/socialcolors)
 * Material design resources can be found [here](https://material.io/).
   * [Icons](https://material.io/tools/icons/?style=baseline)
+
+## Notes for ecomatController code
+* Joystick (+ display?) need to override input from app.
+  * There's certainly a logical way to achieve this
+* Angle/strength from virtual joystick will need to be converted to usable values.
+* Should data be sent back to the app from the TUC (speed, etc.)?
+* Should the app kick the user back to the selection or login screen if the TUC disconnects?
+* 
