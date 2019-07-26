@@ -20,22 +20,24 @@ public class ControllerThread extends Thread {
     private InetSocketAddress address;
     private final BlockingQueue<ByteBuffer> queue;
 
-    ControllerThread(InetSocketAddress address, BlockingQueue<ByteBuffer> bq){
-        this.address = address;
+    ControllerThread(BlockingQueue<ByteBuffer> bq){
+        // Host and port will probably need to be changed later
+        this.address = InetSocketAddress.createUnresolved("192.168.82.246", 25565);
         this.queue = bq;
     }
 
     // Custom implementation of run() method from Thread interface
     @Override
     public void run(){
-        ByteBuffer bb;
+        ByteBuffer bb = ByteBuffer.allocateDirect(10);
         try {
             // Initialize the ByteBuffer, Socket, and Packet needed for transmitting data
-            bb = queue.take();
             DatagramSocket ds = new DatagramSocket(address);
             DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
-            while(ds.isConnected()){ // should this just be while(true)?
+            while(ds.isConnected() && !queue.isEmpty()){ // should this just be while(true)?
+
+                // If no longer connected, wait until the connection is reestablished
                 if (!ds.isConnected()) {
                     synchronized(this) {
                         while (!ds.isConnected())
@@ -45,7 +47,7 @@ public class ControllerThread extends Thread {
                 }
 
                 // Send the data
-                bb = queue.take();
+                bb = queue.take(); // take() automatically waits until data is available to retrieve
                 dp.setData(bb.array());
                 ds.send(dp);
             }

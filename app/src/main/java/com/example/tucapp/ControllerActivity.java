@@ -47,7 +47,7 @@ public class ControllerActivity extends AppCompatActivity {
     private int lightMode = 0; // 0 - 3
     private ByteBuffer bb = ByteBuffer.allocateDirect(10);
     private IntBuffer ib = bb.asIntBuffer();
-    private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>();
+    private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(2);
 
 
     @Override
@@ -55,10 +55,12 @@ public class ControllerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
 
-        new Thread(new Sender()).start();
-
         onListeners();
         companionListener();
+
+        // Start threads for sending info
+        new Thread(new Sender()).start();
+        new ControllerThread(bq).start();
 
         ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
@@ -240,10 +242,16 @@ public class ControllerActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                while(getClass().getSimpleName().equals("ControllerActivity.Sender")){
-                    bq.put(bb);
+                while(getClass().getSimpleName().equals("Sender")){
+                    // If the queue can't receive the new data, clear it and try again (want to be sending the latest data)
+                    if(!bq.offer(bb)){
+                        bq.clear();
+                        bq.offer(bb);
+                    } else
+                        bq.offer(bb);
                 }
-            } catch(InterruptedException e){
+                notifyAll();
+            } catch(Exception e){
             }
         }
     }

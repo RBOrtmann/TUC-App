@@ -94,9 +94,11 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    // Returns default password
     protected static String getDefaultPassword(){
         return "admin";
     }
+    // Returns override password
     protected static String getOverridePassword(){
         return "overridepassword";
     }
