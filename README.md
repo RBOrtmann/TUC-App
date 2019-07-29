@@ -1,4 +1,5 @@
-# TUC-App
+# TUC App
+
 Repository for TUC companion app.
 
 ## Notes for final build
