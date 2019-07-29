@@ -39,7 +39,7 @@
                 android:id="@+id/joystickView"
                 android:layout_width="305dp"
                 android:layout_height="305dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 app:JV_backgroundColor="@android:color/transparent"
                 app:JV_borderColor="?attr/colorPrimaryDark"

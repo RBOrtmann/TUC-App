@@ -11,11 +11,10 @@
 package com.example.tucapp;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,20 +22,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -45,10 +38,8 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
-    private ByteBuffer bb = ByteBuffer.allocateDirect(10);
-    private IntBuffer ib = bb.asIntBuffer();
+    private ByteBuffer bb = ByteBuffer.allocateDirect(11);
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(2);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +50,10 @@ public class ControllerActivity extends AppCompatActivity {
         companionListener();
 
         // Start threads for sending info
-        new Thread(new Sender()).start();
-        new ControllerThread(bq).start();
+//        new Thread(new Sender()).start();
+//        new ControllerThread(bq).start();
 
-        ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
     // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
@@ -71,35 +62,47 @@ public class ControllerActivity extends AppCompatActivity {
         View.OnTouchListener otl = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    switch (view.getId()) {
-                        case R.id.fabFloatDown:
-                            ib.put(2, 1);
-                            break;
-                        case R.id.fabPowerDown:
-                            ib.put(3, 1);
-                            break;
-                        case R.id.fabPowerUp:
-                            ib.put(4, 1);
-                            break;
-                        case R.id.fabTiltUp:
-                            ib.put(5, 1);
-                            break;
-                        case R.id.fabTiltDown:
-                            ib.put(6, 1);
-                            break;
+                if(view instanceof FloatingActionButton){
+                    if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
+                        switch (view.getId()){
+                            case R.id.fabFloatDown:
+                                touchTrue(2);
+                                break;
+                            case R.id.fabPowerDown:
+                                touchTrue(3);
+                                break;
+                            case R.id.fabPowerUp:
+                                touchTrue(4);
+                                break;
+                            case R.id.fabTiltDown:
+                                touchTrue(5);
+                                break;
+                            case R.id.fabTiltUp:
+                                touchTrue(6);
+                                break;
+                        }
+                    } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
+                        switch (view.getId()){
+                            case R.id.fabFloatDown:
+                                touchFalse(2);
+                                break;
+                            case R.id.fabPowerDown:
+                                touchFalse(3);
+                                break;
+                            case R.id.fabPowerUp:
+                                touchFalse(4);
+                                break;
+                            case R.id.fabTiltDown:
+                                touchFalse(5);
+                                break;
+                            case R.id.fabTiltUp:
+                                touchFalse(6);
+                                break;
+                        }
+                        view.performClick();
                     }
-
-                } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
-                    ib.put(2, 0);
-                    ib.put(3, 0);
-                    ib.put(4, 0);
-                    ib.put(5, 0);
-                    ib.put(6, 0);
-                    view.performClick();
                 }
-
-                return true;
+                return false;
             }
         };
         findViewById(R.id.fabFloatDown).setOnTouchListener(otl);
@@ -114,13 +117,13 @@ public class ControllerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch(view.getId()){
                     case R.id.fabPTO:
-                        ib.put(ptoCounter());
+                        ptoCounter();
                         break;
                     case R.id.fabFrontBack:
-                        ib.put(frontBack());
+                        frontBack();
                         break;
                     case R.id.fabLights:
-                        ib.put(toggleLights());
+                        toggleLights();
                         break;
                 }
             }
@@ -131,16 +134,26 @@ public class ControllerActivity extends AppCompatActivity {
         findViewById(R.id.fabLights).setOnClickListener(ocl);
 
         // JOYSTICK
-        final JoystickView joystick = findViewById(R.id.joystickView);
+        JoystickView joystick = findViewById(R.id.joystickView);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
                 // Do stuff here
-                ib.put(0, angle);
-                ib.put(1, strength);
+                bb.put(0, (byte)angle);
+                bb.put(1, (byte)strength);
             }
         });
 
+    }
+
+    // Receives buffer index and sets that value to true (= 1)
+    private void touchTrue(int index){
+        bb.put(index, (byte)1);
+    }
+
+    // Receives buffer index and sets that value to false (= 0)
+    private void touchFalse(int index){
+        bb.put(index, (byte)0);
     }
 
     // If Companion Mode is enabled, this sets the listener for that View
@@ -195,7 +208,7 @@ public class ControllerActivity extends AppCompatActivity {
     }
 
     // Increments the PTO counter and returns its value
-    private int ptoCounter(){
+    private void ptoCounter(){
         TextView tv = findViewById(R.id.txtPTO);
         ptoCount++;
         if(ptoCount > 5)
@@ -203,11 +216,11 @@ public class ControllerActivity extends AppCompatActivity {
 
         tv.setText(getString(R.string.pto_formatted, Integer.toString(ptoCount)));
 
-        return ptoCount;
+        bb.put(7, (byte)ptoCount);
     }
 
     // Switches the attachment mode to front if back, and to back if front, returning the value as an integer
-    private int frontBack(){
+    private void frontBack(){
         FloatingActionButton fab = findViewById(R.id.fabFrontBack);
         frontBack = !frontBack;
         if(frontBack)
@@ -215,11 +228,11 @@ public class ControllerActivity extends AppCompatActivity {
         else
             fab.setImageDrawable(getDrawable(R.drawable.ic_swap_arrows_front));
 
-        return frontBack ? 1 : 0; // Converts boolean value to integer
+        bb.put(8, (byte)(frontBack ? 1 : 0)); // Converts boolean value to integer
     }
 
     // Increments the counter that keeps track of the light mode and returns it
-    private int toggleLights(){
+    private void toggleLights(){
         FloatingActionButton fab = findViewById(R.id.fabLights);
         lightMode++;
         if(lightMode > 3)
@@ -234,7 +247,7 @@ public class ControllerActivity extends AppCompatActivity {
         else if(lightMode == 3)
             fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both));
 
-        return lightMode;
+        bb.put(9,(byte)lightMode);
     }
 
     // Subclass that continuously enqueues the ByteBuffer into the BlockingQueue
@@ -264,7 +277,7 @@ public class ControllerActivity extends AppCompatActivity {
         super.onResume();
         hideSystemUI();
         companionListener();
-        ib.put(10, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
     @Override
