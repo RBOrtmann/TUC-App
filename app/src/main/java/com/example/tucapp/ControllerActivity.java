@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -257,14 +256,14 @@ public class ControllerActivity extends AppCompatActivity {
             try {
                 while(getClass().getSimpleName().equals("Sender")){
                     // If the queue can't receive the new data, clear it and try again (want to be sending the latest data)
-                    if(!bq.offer(bb)){
+                    if(!bq.offer(bb))
                         bq.clear();
-                        bq.offer(bb);
-                    } else
-                        bq.offer(bb);
+
+                    bq.offer(bb);
                 }
                 notifyAll();
             } catch(Exception e){
+                e.printStackTrace();
             }
         }
     }

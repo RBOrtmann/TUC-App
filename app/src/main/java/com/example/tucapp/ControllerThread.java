@@ -13,12 +13,13 @@ package com.example.tucapp;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;
 
 public class ControllerThread extends Thread {
     private InetSocketAddress address;
-    private final BlockingQueue<ByteBuffer> queue;
+    private BlockingQueue<ByteBuffer> queue;
 
     ControllerThread(BlockingQueue<ByteBuffer> bq){
         // Host and port will probably need to be changed later
@@ -35,16 +36,11 @@ public class ControllerThread extends Thread {
             DatagramSocket ds = new DatagramSocket(address);
             DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
-            while(ds.isConnected() && !queue.isEmpty()){ // should this just be while(true)?
+            reconnect(ds);
 
+            while(ds.isConnected()){ // should this just be while(true)?
                 // If no longer connected, wait until the connection is reestablished
-                if (!ds.isConnected()) {
-                    synchronized(this) {
-                        while (!ds.isConnected())
-                            queue.clear(); // Clears the queue so no addt'l instructions are stored while disconnected
-                            ds.connect(address); // Attempts to connect on the same address
-                    }
-                }
+                reconnect(ds);
 
                 // Send the data
                 bb = queue.take(); // take() automatically waits until data is available to retrieve
@@ -53,6 +49,16 @@ public class ControllerThread extends Thread {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void reconnect(DatagramSocket ds) throws SocketException {
+        if (!ds.isConnected()) {
+            synchronized (this) {
+                while (!ds.isConnected())
+                    queue.clear(); // Clears the queue so no addt'l instructions are stored while disconnected
+                ds.connect(address); // Attempts to connect on the same address
+            }
         }
     }
 }
