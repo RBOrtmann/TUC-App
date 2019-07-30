@@ -1,6 +1,5 @@
 <img src="https://github.com/S1lentHurr1cane/TUC-App/blob/master/resources/ring-co_TUC-01.svg">
 
-# TUC App
 Repository for TUC companion app.
 
 ## Notes for final build
