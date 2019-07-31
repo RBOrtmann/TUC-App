@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -38,7 +39,7 @@ public class ControllerActivity extends AppCompatActivity {
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
     private ByteBuffer bb = ByteBuffer.allocateDirect(15);
-    private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(2);
+    private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,8 @@ public class ControllerActivity extends AppCompatActivity {
         companionListener();
 
         // Start threads for sending info
-//        new Thread(new Sender()).start();
-//        new ControllerThread(bq).start();
+        new Thread(new Sender()).start();
+        new ControllerThread(bq).start();
 
         bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
@@ -256,13 +257,10 @@ public class ControllerActivity extends AppCompatActivity {
         public void run() {
             try {
                 while(getClass().getSimpleName().equals("Sender")){
-                    // If the queue can't receive the new data, clear it and try again (want to be sending the latest data)
-                    if(!bq.offer(bb))
-                        bq.clear();
-
-                    bq.offer(bb);
+                    Log.d("Sender", "Attempting put...");
+                    bq.put(bb);
+                    Log.d("Sender", "Put confirmed.");
                 }
-                notifyAll(); // Not sure if this is necessary since I don't use wait()
             } catch(Exception e){
                 e.printStackTrace();
             }

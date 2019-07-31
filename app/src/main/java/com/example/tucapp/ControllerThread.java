@@ -10,8 +10,11 @@
 
 package com.example.tucapp;
 
+import android.util.Log;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
@@ -23,17 +26,18 @@ public class ControllerThread extends Thread {
 
     ControllerThread(BlockingQueue<ByteBuffer> bq){
         // Host and port will probably need to be changed later
-        this.address = InetSocketAddress.createUnresolved("192.168.82.246", 25565);
         this.queue = bq;
     }
 
     // Custom implementation of run() method from Thread interface
     @Override
     public void run(){
-        ByteBuffer bb = ByteBuffer.allocateDirect(10);
+        ByteBuffer bb = ByteBuffer.allocateDirect(15);
         try {
             // Initialize the ByteBuffer, Socket, and Packet needed for transmitting data
-            DatagramSocket ds = new DatagramSocket(address);
+            address = new InetSocketAddress(InetAddress.getByName("192.168.82.246"), 25565);
+            DatagramSocket ds = new DatagramSocket();
+            ds.connect(address);
             DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
             reconnect(ds);
@@ -43,7 +47,9 @@ public class ControllerThread extends Thread {
                 reconnect(ds);
 
                 // Send the data
+                Log.d("ControllerThread", "Attempting take...");
                 bb = queue.take(); // take() automatically waits until data is available to retrieve
+                Log.d("ControllerThread", "Take confirmed.");
                 dp.setData(bb.array());
                 ds.send(dp);
             }
@@ -56,9 +62,11 @@ public class ControllerThread extends Thread {
     private void reconnect(DatagramSocket ds) throws SocketException {
         if (!ds.isConnected()) {
             synchronized (this) {
-                while (!ds.isConnected())
+                while (!ds.isConnected()) {
                     queue.clear(); // Clears the queue so no addt'l instructions are stored while disconnected
-                ds.connect(address); // Attempts to connect on the same address
+                    ds.connect(address); // Attempts to connect on the same address
+                    Log.d("ControllerThread", "Reconnecting...");
+                }
             }
         }
     }

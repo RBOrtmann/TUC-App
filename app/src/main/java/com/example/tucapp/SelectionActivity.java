@@ -33,7 +33,7 @@ public class SelectionActivity extends AppCompatActivity {
     // Checks WiFi connection for standard TUC naming convention, then sends intent to ControllerActivity
     public void toController(View v){
         WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("Ring-Co")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
+        if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("TUCwireless")){ // THIS SHOULD BE CHANGED TO STANDARD TUC NETWORK CONVENTION
             startActivity(new Intent(this, ControllerActivity.class));
         } else {
             Toast.makeText(this, "Please connect to a TUC network.", Toast.LENGTH_SHORT).show();
