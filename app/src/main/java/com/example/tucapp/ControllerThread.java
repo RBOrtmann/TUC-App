@@ -52,6 +52,7 @@ public class ControllerThread extends Thread {
         }
     }
 
+    // Reconnection method from Oracle (I think) retooled for my purposes
     private void reconnect(DatagramSocket ds) throws SocketException {
         if (!ds.isConnected()) {
             synchronized (this) {

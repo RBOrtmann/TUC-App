@@ -37,7 +37,7 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
-    private ByteBuffer bb = ByteBuffer.allocateDirect(11);
+    private ByteBuffer bb = ByteBuffer.allocateDirect(15);
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(2);
 
     @Override
@@ -104,6 +104,7 @@ public class ControllerActivity extends AppCompatActivity {
                 return false;
             }
         };
+
         findViewById(R.id.fabFloatDown).setOnTouchListener(otl);
         findViewById(R.id.fabPowerDown).setOnTouchListener(otl);
         findViewById(R.id.fabPowerUp).setOnTouchListener(otl);
@@ -137,8 +138,8 @@ public class ControllerActivity extends AppCompatActivity {
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                // Do stuff here
-                bb.put(0, (byte)angle);
+                // angle was originally in the 0th index, now nothing is there
+                bb.putInt(11, angle); // angle will never be > 360 so angle is stored in last two bytes of bb
                 bb.put(1, (byte)strength);
             }
         });
@@ -222,10 +223,10 @@ public class ControllerActivity extends AppCompatActivity {
     private void frontBack(){
         FloatingActionButton fab = findViewById(R.id.fabFrontBack);
         frontBack = !frontBack;
-        if(frontBack)
-            fab.setImageDrawable(getDrawable(R.drawable.ic_swap_arrows_back));
-        else
-            fab.setImageDrawable(getDrawable(R.drawable.ic_swap_arrows_front));
+
+        fab.setImageDrawable(
+                frontBack ? getDrawable(R.drawable.ic_swap_arrows_back)
+                        : getDrawable(R.drawable.ic_swap_arrows_front));
 
         bb.put(8, (byte)(frontBack ? 1 : 0)); // Converts boolean value to integer
     }
@@ -261,7 +262,7 @@ public class ControllerActivity extends AppCompatActivity {
 
                     bq.offer(bb);
                 }
-                notifyAll();
+                notifyAll(); // Not sure if this is necessary since I don't use wait()
             } catch(Exception e){
                 e.printStackTrace();
             }

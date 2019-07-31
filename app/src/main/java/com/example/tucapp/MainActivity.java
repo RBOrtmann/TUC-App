@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnPassword).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(getPasswordText().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("password", SettingsActivity.getDefaultPassword()))
+                if(getPasswordText().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                        .getString("password", SettingsActivity.getDefaultPassword()))
                 || getPasswordText().equals(SettingsActivity.getOverridePassword())){
                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
                     toSelection();
