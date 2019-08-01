@@ -160,38 +160,49 @@ public class ControllerActivity extends AppCompatActivity {
     // If Companion Mode is enabled, this sets the listener for that View
     @SuppressLint("ClickableViewAccessibility")
     private void companionListener(){
-        Button btn = findViewById(R.id.btnCompanion);
-
         if(PreferenceManager.getDefaultSharedPreferences(this).getString("user_mode", "1").equals("2")){
             disableJoystick();
-            btn.setEnabled(true);
-            btn.setVisibility(View.VISIBLE);
-
-            btn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if(b)
-                        findViewById(R.id.joystickView).requestFocus();
-                }
-            });
-
-            // COMPANION
-            btn.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
-                        enableJoystick();
-                    } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
-                        disableJoystick();
-                    }
-                    return true;
-                }
-            });
+            enableCompanion();
         } else {
-            btn.setEnabled(false);
-            btn.setVisibility(View.INVISIBLE);
+            disableCompanion();
             enableJoystick();
         }
+    }
+
+    // This method enables the companion button
+    @SuppressLint("ClickableViewAccessibility")
+    private void enableCompanion(){
+        Button btn = findViewById(R.id.btnCompanion);
+        btn.setEnabled(true);
+        btn.setVisibility(View.VISIBLE);
+
+        btn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                    findViewById(R.id.joystickView).requestFocus();
+            }
+        });
+
+        btn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
+                    enableJoystick();
+                } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
+                    disableJoystick();
+                    view.performClick();
+                }
+                return true;
+            }
+        });
+    }
+
+    // This method disables the companion button
+    private void disableCompanion(){
+        Button btn = findViewById(R.id.btnCompanion);
+        btn.setEnabled(false);
+        btn.setVisibility(View.INVISIBLE);
     }
 
     // A method for enabling the Joystick

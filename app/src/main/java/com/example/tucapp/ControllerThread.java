@@ -37,10 +37,10 @@ public class ControllerThread extends Thread {
             // Initialize the ByteBuffer, Socket, and Packet needed for transmitting data
             address = new InetSocketAddress(InetAddress.getByName("192.168.82.246"), 25565);
             DatagramSocket ds = new DatagramSocket();
-            ds.connect(address);
             DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
             reconnect(ds);
+            Log.d("DatagramSocket", "ds connected on " + ds.getInetAddress() + ":" + ds.getPort());
 
             while(ds.isConnected()){ // should this just be while(true)?
                 // If no longer connected, wait until the connection is reestablished
