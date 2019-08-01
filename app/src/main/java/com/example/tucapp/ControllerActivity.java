@@ -246,18 +246,21 @@ public class ControllerActivity extends AppCompatActivity {
     // Increments the counter that keeps track of the light mode and returns it
     private void toggleLights(){
         FloatingActionButton fab = findViewById(R.id.fabLights);
+
         lightMode++;
         if(lightMode > 3)
             lightMode = 0;
 
-        if(lightMode == 0)
-            fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_off));
-        else if(lightMode == 1)
-            fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_dimmed));
-        else if(lightMode == 2)
-            fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_high));
-        else if(lightMode == 3)
-            fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both));
+        switch(lightMode){
+            case 0:
+                fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_off)); break;
+            case 1:
+                fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_dimmed)); break;
+            case 2:
+                fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_high)); break;
+            case 3:
+                fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both)); break;
+        }
 
         bb.put(9,(byte)lightMode);
     }
