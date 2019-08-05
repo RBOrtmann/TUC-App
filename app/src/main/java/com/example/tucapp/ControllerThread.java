@@ -18,6 +18,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 
 public class ControllerThread extends Thread {
@@ -51,6 +52,7 @@ public class ControllerThread extends Thread {
                 bb = queue.take(); // take() automatically waits until data is available to retrieve
                 Log.d("ControllerThread", "Take confirmed.");
                 dp.setData(bb.array());
+                Log.d("ControllerThread", Arrays.toString(dp.getData()));
                 ds.send(dp);
             }
         } catch (Exception e) {

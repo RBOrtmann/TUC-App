@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
+import java.util.BitSet;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -38,7 +39,8 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
-    private ByteBuffer bb = ByteBuffer.allocateDirect(15);
+    private ByteBuffer bb = ByteBuffer.allocateDirect(4);
+    private BitSet bs = new BitSet(8);
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
 
     @Override
@@ -66,38 +68,38 @@ public class ControllerActivity extends AppCompatActivity {
                     if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
                         switch (view.getId()){
                             case R.id.fabFloatDown:
-                                touchTrue(2);
-                                break;
+                                bs.set(1, true); break;
                             case R.id.fabPowerDown:
-                                touchTrue(3);
-                                break;
+                                bs.set(2, true); break;
                             case R.id.fabPowerUp:
-                                touchTrue(4);
-                                break;
+                                bs.set(3, true); break;
                             case R.id.fabTiltDown:
-                                touchTrue(5);
-                                break;
+                                bs.set(4, true); break;
                             case R.id.fabTiltUp:
-                                touchTrue(6);
-                                break;
+                                bs.set(5, true); break;
+                            case R.id.fabLights:
+                                bs.set(6, true); break;
+                            case R.id.fabPTO:
+                                bs.set(7, true); break;
                         }
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                         switch (view.getId()){
                             case R.id.fabFloatDown:
-                                touchFalse(2);
-                                break;
+                                bs.set(1, false); break;
                             case R.id.fabPowerDown:
-                                touchFalse(3);
-                                break;
+                                bs.set(2, false); break;
                             case R.id.fabPowerUp:
-                                touchFalse(4);
-                                break;
+                                bs.set(3, false); break;
                             case R.id.fabTiltDown:
-                                touchFalse(5);
-                                break;
+                                bs.set(4, false); break;
                             case R.id.fabTiltUp:
-                                touchFalse(6);
-                                break;
+                                bs.set(5, false); break;
+                            case R.id.fabLights:
+                                bs.set(6, true);
+                                toggleLights(); break;
+                            case R.id.fabPTO:
+                                bs.set(7, true);
+                                ptoCounter(); break;
                         }
                         view.performClick();
                     }
@@ -111,28 +113,20 @@ public class ControllerActivity extends AppCompatActivity {
         findViewById(R.id.fabPowerUp).setOnTouchListener(otl);
         findViewById(R.id.fabTiltDown).setOnTouchListener(otl);
         findViewById(R.id.fabTiltUp).setOnTouchListener(otl);
+        findViewById(R.id.fabLights).setOnTouchListener(otl);
+        findViewById(R.id.fabPTO).setOnTouchListener(otl);
 
         // TOGGLES
         View.OnClickListener ocl = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch(view.getId()){
-                    case R.id.fabPTO:
-                        ptoCounter();
-                        break;
-                    case R.id.fabFrontBack:
-                        frontBack();
-                        break;
-                    case R.id.fabLights:
-                        toggleLights();
-                        break;
+                if (view.getId() == R.id.fabFrontBack) {
+                    frontBack();
                 }
             }
         };
 
-        findViewById(R.id.fabPTO).setOnClickListener(ocl);
         findViewById(R.id.fabFrontBack).setOnClickListener(ocl);
-        findViewById(R.id.fabLights).setOnClickListener(ocl);
 
         // JOYSTICK
         JoystickView joystick = findViewById(R.id.joystickView);
@@ -145,16 +139,6 @@ public class ControllerActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    // Receives buffer index and sets that value to true (= 1)
-    private void touchTrue(int index){
-        bb.put(index, (byte)1);
-    }
-
-    // Receives buffer index and sets that value to false (= 0)
-    private void touchFalse(int index){
-        bb.put(index, (byte)0);
     }
 
     // If Companion Mode is enabled, this sets the listener for that View
@@ -227,8 +211,6 @@ public class ControllerActivity extends AppCompatActivity {
             ptoCount = 0;
 
         tv.setText(getString(R.string.pto_formatted, Integer.toString(ptoCount)));
-
-        bb.put(7, (byte)ptoCount);
     }
 
     // Switches the attachment mode to front if back, and to back if front, returning the value as an integer
@@ -237,10 +219,11 @@ public class ControllerActivity extends AppCompatActivity {
         frontBack = !frontBack;
 
         fab.setImageDrawable(
-                frontBack ? getDrawable(R.drawable.ic_swap_arrows_back)
+                frontBack
+                        ? getDrawable(R.drawable.ic_swap_arrows_back)
                         : getDrawable(R.drawable.ic_swap_arrows_front));
 
-        bb.put(8, (byte)(frontBack ? 1 : 0)); // Converts boolean value to integer
+        bs.set(8, frontBack);
     }
 
     // Increments the counter that keeps track of the light mode and returns it
@@ -261,8 +244,6 @@ public class ControllerActivity extends AppCompatActivity {
             case 3:
                 fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both)); break;
         }
-
-        bb.put(9,(byte)lightMode);
     }
 
     // Subclass that continuously enqueues the ByteBuffer into the BlockingQueue
