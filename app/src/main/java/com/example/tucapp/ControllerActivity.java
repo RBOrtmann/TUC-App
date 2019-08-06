@@ -39,9 +39,10 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
-    private ByteBuffer bb = ByteBuffer.allocateDirect(4);
-    private BitSet bs = new BitSet(8);
+    private ByteBuffer bb = ByteBuffer.allocateDirect(8);
+    private ByteBuffer bb2 = ByteBuffer.allocateDirect(8);
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
+    private BlockingQueue<ByteBuffer> bq2 = new LinkedBlockingQueue<>(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +54,9 @@ public class ControllerActivity extends AppCompatActivity {
 
         // Start threads for sending info
         new Thread(new Sender()).start();
-        new ControllerThread(bq).start();
+        new ControllerThread(bq, bq2).start();
 
-        bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        //bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
     // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
@@ -68,37 +69,37 @@ public class ControllerActivity extends AppCompatActivity {
                     if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN){
                         switch (view.getId()){
                             case R.id.fabFloatDown:
-                                bs.set(1, true); break;
+                                bb2.put(0, (byte)1); break;
                             case R.id.fabPowerDown:
-                                bs.set(2, true); break;
+                                bb2.put(1, (byte)1); break;
                             case R.id.fabPowerUp:
-                                bs.set(3, true); break;
+                                bb2.put(2, (byte)1); break;
                             case R.id.fabTiltDown:
-                                bs.set(4, true); break;
+                                bb2.put(3, (byte)1); break;
                             case R.id.fabTiltUp:
-                                bs.set(5, true); break;
+                                bb2.put(4, (byte)1); break;
                             case R.id.fabLights:
-                                bs.set(6, true); break;
+                                bb2.put(5, (byte)1); break;
                             case R.id.fabPTO:
-                                bs.set(7, true); break;
+                                bb2.put(6, (byte)1); break;
                         }
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                         switch (view.getId()){
                             case R.id.fabFloatDown:
-                                bs.set(1, false); break;
+                                bb2.put(0, (byte)0); break;
                             case R.id.fabPowerDown:
-                                bs.set(2, false); break;
+                                bb2.put(1, (byte)0); break;
                             case R.id.fabPowerUp:
-                                bs.set(3, false); break;
+                                bb2.put(2, (byte)0); break;
                             case R.id.fabTiltDown:
-                                bs.set(4, false); break;
+                                bb2.put(3, (byte)0); break;
                             case R.id.fabTiltUp:
-                                bs.set(5, false); break;
+                                bb2.put(4, (byte)0); break;
                             case R.id.fabLights:
-                                bs.set(6, true);
+                                bb2.put(5, (byte)0);
                                 toggleLights(); break;
                             case R.id.fabPTO:
-                                bs.set(7, true);
+                                bb2.put(6, (byte)0);
                                 ptoCounter(); break;
                         }
                         view.performClick();
@@ -134,8 +135,8 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public void onMove(int angle, int strength) {
                 // angle was originally in the 0th index, now nothing is there
-                bb.putInt(11, angle); // angle will never be > 360 so angle is stored in last two bytes of bb
-                bb.put(1, (byte)strength);
+                bb.putInt(angle); // angle will never be > 360 so angle is stored in last two bytes of bb
+                bb.putInt(strength);
             }
         });
 
@@ -223,7 +224,7 @@ public class ControllerActivity extends AppCompatActivity {
                         ? getDrawable(R.drawable.ic_swap_arrows_back)
                         : getDrawable(R.drawable.ic_swap_arrows_front));
 
-        bs.set(8, frontBack);
+        bb2.put(7, (byte)(frontBack ? 1 : 0));
     }
 
     // Increments the counter that keeps track of the light mode and returns it
@@ -250,11 +251,12 @@ public class ControllerActivity extends AppCompatActivity {
     private class Sender implements Runnable{
         @Override
         public void run() {
+            //bb2.put(7, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("tuc_mode", "1")));
             try {
                 while(getClass().getSimpleName().equals("Sender")){
-                    Log.d("Sender", "Attempting put...");
+                    //bb2.put(7, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("tuc_mode", "1")));
                     bq.put(bb);
-                    Log.d("Sender", "Put confirmed.");
+                    bq2.put(bb2);
                 }
             } catch(Exception e){
                 e.printStackTrace();
