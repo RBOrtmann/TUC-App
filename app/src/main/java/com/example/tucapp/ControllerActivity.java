@@ -134,9 +134,8 @@ public class ControllerActivity extends AppCompatActivity {
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                // angle was originally in the 0th index, now nothing is there
-                bb.putInt(angle); // angle will never be > 360 so angle is stored in last two bytes of bb
-                bb.putInt(strength);
+                bb.putInt(0, angle);
+                bb.putInt(4, strength);
             }
         });
 
