@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -42,6 +44,10 @@ public class ControllerActivity extends AppCompatActivity {
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
     private BlockingQueue<ByteBuffer> bq2 = new LinkedBlockingQueue<>(1);
 
+/*
+PTO, Lights, and Front/back should be on a separate message that sends integers instead of just quick presses
+ */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +58,14 @@ public class ControllerActivity extends AppCompatActivity {
 
         bb = ByteBuffer.wrap(new byte[8]);
         bb2 = ByteBuffer.wrap(new byte[8]);
-        // Start threads for sending info
-        new Thread(new Sender()).start();
-        new ControllerThread(bq, bq2).start();
 
-        //bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        ControllerThread ct;
+        Thread sender;
+        // Start threads for sending info
+        sender = new Thread(new Sender());
+        sender.start();
+        ct = new ControllerThread(bq, bq2);
+        ct.start();
     }
 
     // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
@@ -250,10 +259,20 @@ public class ControllerActivity extends AppCompatActivity {
     private class Sender implements Runnable{
         @Override
         public void run() {
-            //bb2.put(7, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("tuc_mode", "1")));
+//            ByteBuffer oldBB = ByteBuffer.wrap(new byte[8]);
+//            ByteBuffer oldBB2 = ByteBuffer.wrap(new byte[8]);
             try {
                 while(getClass().getSimpleName().equals("Sender")){
-                    //bb2.put(7, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("tuc_mode", "1")));
+//                    if(!Arrays.equals(bb.array(), oldBB.array())){
+//                        bq.put(bb);
+//                    }
+//                    if(!Arrays.equals(bb2.array(), oldBB2.array())){
+//                        bq2.put(bb2);
+//                    }
+//
+//                    oldBB = bb;
+//                    oldBB2 = bb2;
+
                     bq.put(bb);
                     bq2.put(bb2);
                 }
@@ -271,7 +290,27 @@ public class ControllerActivity extends AppCompatActivity {
         super.onResume();
         hideSystemUI();
         companionListener();
-        //bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+
+//        if(ct.isAlive() || sender.isAlive()){
+//            synchronized (ct){
+//                ct.notify();
+//            }
+//            synchronized (sender){
+//                sender.notify();
+//            }
+//        }
+
+    }
+
+    @Override
+    protected void onPause(){
+//        try {
+//            sender.wait();
+//            ct.wait();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        super.onPause();
     }
 
     @Override
