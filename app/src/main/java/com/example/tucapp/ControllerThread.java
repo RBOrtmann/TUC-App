@@ -37,7 +37,7 @@ public class ControllerThread extends Thread {
     // Custom implementation of run() method from Thread interface
     @Override
     public void run(){
-        ByteBuffer bb;
+        ByteBuffer bb = ByteBuffer.allocateDirect(15);
         ByteArrayOutputStream outputStreamJoystick = new ByteArrayOutputStream();
         ByteArrayOutputStream outputStreamButtons = new ByteArrayOutputStream();
 
@@ -62,9 +62,10 @@ public class ControllerThread extends Thread {
             address = new InetSocketAddress(InetAddress.getByName("192.168.82.246"), 25565);
 
             DatagramSocket ds = new DatagramSocket();
-            DatagramPacket dp = new DatagramPacket(null, 15, address);
+            DatagramPacket dp = new DatagramPacket(bb.array(), 15, address);
 
             while(this.isAlive()){ // should this just be while(true)?
+
                 // If no longer connected, wait until the connection is reestablished
                 reconnect(ds);
 
@@ -72,15 +73,17 @@ public class ControllerThread extends Thread {
                 bb = queue.take(); // take() automatically waits until data is available to retrieve
                 outputStreamJoystick.write(joystickPrefix);
                 outputStreamJoystick.write(bb.array());
-                outputStreamJoystick.write(checkSum(bb.array()));
+                outputStreamJoystick.write(checkSum(outputStreamJoystick.toByteArray()));
                 outputStreamJoystick.write(0x0D); // Hex for ASCII carriage return
+                Log.d("outputStreamJoystick", bytesToHex(outputStreamJoystick.toByteArray()));
 
                 // Construct the button data
                 bb = bq2.take();
                 outputStreamButtons.write(buttonsPrefix);
                 outputStreamButtons.write(bb.array());
-                outputStreamButtons.write(checkSum(bb.array()));
-                outputStreamJoystick.write(0x0D); // Hex for ASCII carriage return
+                outputStreamButtons.write(checkSum(outputStreamButtons.toByteArray()));
+                outputStreamButtons.write(0x0D); // Hex for ASCII carriage return
+                Log.d("outputStreamButtons", bytesToHex(outputStreamButtons.toByteArray()));
 
                 // Send the data
                 dp.setData(outputStreamJoystick.toByteArray());
@@ -88,6 +91,10 @@ public class ControllerThread extends Thread {
 
                 dp.setData(outputStreamButtons.toByteArray());
                 ds.send(dp);
+
+                // Reset output streams
+                outputStreamJoystick.reset();
+                outputStreamButtons.reset();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,5 +120,16 @@ public class ControllerThread extends Thread {
             sum ^= b;
         }
         return sum;
+    }
+
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }

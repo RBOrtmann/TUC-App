@@ -271,7 +271,7 @@ public class ControllerActivity extends AppCompatActivity {
         super.onResume();
         hideSystemUI();
         companionListener();
-        bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
+        //bb.put(10, (byte)Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("tuc_mode", "1")));
     }
 
     @Override
