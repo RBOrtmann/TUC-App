@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,7 +27,6 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
-import java.util.BitSet;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -39,8 +37,8 @@ public class ControllerActivity extends AppCompatActivity {
     private int ptoCount = 0; // 0 - 5
     private boolean frontBack = false; // False = front, true = back
     private int lightMode = 0; // 0 - 3
-    private ByteBuffer bb = ByteBuffer.allocateDirect(8);
-    private ByteBuffer bb2 = ByteBuffer.allocateDirect(8);
+    private ByteBuffer bb;
+    private ByteBuffer bb2;
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
     private BlockingQueue<ByteBuffer> bq2 = new LinkedBlockingQueue<>(1);
 
@@ -52,6 +50,8 @@ public class ControllerActivity extends AppCompatActivity {
         onListeners();
         companionListener();
 
+        bb = ByteBuffer.wrap(new byte[8]);
+        bb2 = ByteBuffer.wrap(new byte[8]);
         // Start threads for sending info
         new Thread(new Sender()).start();
         new ControllerThread(bq, bq2).start();

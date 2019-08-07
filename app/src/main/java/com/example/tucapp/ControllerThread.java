@@ -20,7 +20,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.concurrent.BlockingQueue;
 
 public class ControllerThread extends Thread {
@@ -37,7 +36,7 @@ public class ControllerThread extends Thread {
     // Custom implementation of run() method from Thread interface
     @Override
     public void run(){
-        ByteBuffer bb = ByteBuffer.allocateDirect(15);
+        ByteBuffer bb = ByteBuffer.allocateDirect(8);
         ByteArrayOutputStream outputStreamJoystick = new ByteArrayOutputStream();
         ByteArrayOutputStream outputStreamButtons = new ByteArrayOutputStream();
 
@@ -62,7 +61,7 @@ public class ControllerThread extends Thread {
             address = new InetSocketAddress(InetAddress.getByName("192.168.82.246"), 25565);
 
             DatagramSocket ds = new DatagramSocket();
-            DatagramPacket dp = new DatagramPacket(bb.array(), 15, address);
+            DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
             while(this.isAlive()){ // should this just be while(true)?
 
@@ -79,6 +78,7 @@ public class ControllerThread extends Thread {
 
                 // Construct the button data
                 bb = bq2.take();
+                Log.d("buttonBuffer", Arrays.toString(bb.array()));
                 outputStreamButtons.write(buttonsPrefix);
                 outputStreamButtons.write(bb.array());
                 outputStreamButtons.write(checkSum(outputStreamButtons.toByteArray()));
