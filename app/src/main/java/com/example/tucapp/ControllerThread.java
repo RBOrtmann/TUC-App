@@ -68,6 +68,11 @@ public class ControllerThread extends Thread {
                 // If no longer connected, wait until the connection is reestablished
                 reconnect(ds);
 
+                if(queue.isEmpty() && bq2.isEmpty()){
+                    Log.d("ControllerThread", "Continuing...");
+                    continue;
+                }
+
                 // Construct the joystick data
                 bb = queue.take(); // take() automatically waits until data is available to retrieve
                 outputStreamJoystick.write(joystickPrefix);

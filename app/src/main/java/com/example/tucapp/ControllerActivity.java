@@ -59,13 +59,9 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         bb = ByteBuffer.wrap(new byte[8]);
         bb2 = ByteBuffer.wrap(new byte[8]);
 
-        ControllerThread ct;
-        Thread sender;
         // Start threads for sending info
-        sender = new Thread(new Sender());
-        sender.start();
-        ct = new ControllerThread(bq, bq2);
-        ct.start();
+        new Thread(new Sender()).start();
+        new ControllerThread(bq, bq2).start();
     }
 
     // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
@@ -259,22 +255,24 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
     private class Sender implements Runnable{
         @Override
         public void run() {
-//            ByteBuffer oldBB = ByteBuffer.wrap(new byte[8]);
-//            ByteBuffer oldBB2 = ByteBuffer.wrap(new byte[8]);
+            ByteBuffer oldBB = ByteBuffer.wrap(new byte[8]);
+            ByteBuffer oldBB2 = ByteBuffer.wrap(new byte[8]);
             try {
-                while(getClass().getSimpleName().equals("Sender")){
-//                    if(!Arrays.equals(bb.array(), oldBB.array())){
-//                        bq.put(bb);
-//                    }
-//                    if(!Arrays.equals(bb2.array(), oldBB2.array())){
-//                        bq2.put(bb2);
-//                    }
-//
-//                    oldBB = bb;
-//                    oldBB2 = bb2;
+                while(getClass().getSimpleName().equals("Sender")) {
 
-                    bq.put(bb);
-                    bq2.put(bb2);
+                    // THis is not working for some reason...
+                    if (bb.compareTo(oldBB) != 0){
+                        bq.put(bb);
+                        Log.d("Sender", "put BB");
+                    }
+
+                    if(bb2.compareTo(oldBB2) != 0) {
+                        bq2.put(bb2);
+                        Log.d("Sender", "put BB2");
+                    }
+
+                    oldBB = bb;
+                    oldBB2 = bb2;
                 }
             } catch(Exception e){
                 e.printStackTrace();
@@ -290,27 +288,6 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         super.onResume();
         hideSystemUI();
         companionListener();
-
-//        if(ct.isAlive() || sender.isAlive()){
-//            synchronized (ct){
-//                ct.notify();
-//            }
-//            synchronized (sender){
-//                sender.notify();
-//            }
-//        }
-
-    }
-
-    @Override
-    protected void onPause(){
-//        try {
-//            sender.wait();
-//            ct.wait();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        super.onPause();
     }
 
     @Override
