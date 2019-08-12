@@ -262,7 +262,6 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         public void run() {
             try {
                 while(getClass().getSimpleName().equals("Sender")) {
-
                     WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("TUCwireless"))
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -297,7 +296,7 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
                 }
             }
         } catch (Exception e){
-
+            e.printStackTrace();
         }
 
         super.onPause();
