@@ -12,7 +12,9 @@ package com.example.tucapp;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -43,6 +46,8 @@ public class ControllerActivity extends AppCompatActivity {
     private ByteBuffer bb2;
     private BlockingQueue<ByteBuffer> bq = new LinkedBlockingQueue<>(1);
     private BlockingQueue<ByteBuffer> bq2 = new LinkedBlockingQueue<>(1);
+
+    private final ControllerThread ct = new ControllerThread(bq, bq2);
 
 /*
 PTO, Lights, and Front/back should be on a separate message that sends integers instead of just quick presses
@@ -61,7 +66,7 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
 
         // Start threads for sending info
         new Thread(new Sender()).start();
-        new ControllerThread(bq, bq2).start();
+        ct.start();
     }
 
     // Sets the onTouch, onClick, and onMove listeners for the on-screen Views
@@ -255,24 +260,15 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
     private class Sender implements Runnable{
         @Override
         public void run() {
-            ByteBuffer oldBB = ByteBuffer.wrap(new byte[8]);
-            ByteBuffer oldBB2 = ByteBuffer.wrap(new byte[8]);
             try {
                 while(getClass().getSimpleName().equals("Sender")) {
 
-                    // THis is not working for some reason...
-                    if (bb.compareTo(oldBB) != 0){
-                        bq.put(bb);
-                        Log.d("Sender", "put BB");
-                    }
+                    WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("TUCwireless"))
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                    if(bb2.compareTo(oldBB2) != 0) {
-                        bq2.put(bb2);
-                        Log.d("Sender", "put BB2");
-                    }
-
-                    oldBB = bb;
-                    oldBB2 = bb2;
+                    bq.put(bb);
+                    bq2.put(bb2);
                 }
             } catch(Exception e){
                 e.printStackTrace();
@@ -288,6 +284,23 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         super.onResume();
         hideSystemUI();
         companionListener();
+
+        ct.notify();
+    }
+
+    @Override
+    public void onPause(){
+        try{
+            synchronized (ct){
+                while(getApplicationContext() != this){
+                    ct.wait();
+                }
+            }
+        } catch (Exception e){
+
+        }
+
+        super.onPause();
     }
 
     @Override
