@@ -48,6 +48,7 @@ public class ControllerActivity extends AppCompatActivity {
     private BlockingQueue<ByteBuffer> bq2 = new LinkedBlockingQueue<>(1);
 
     private final ControllerThread ct = new ControllerThread(bq, bq2);
+    private static boolean active = false;
 
 /*
 PTO, Lights, and Front/back should be on a separate message that sends integers instead of just quick presses
@@ -63,6 +64,8 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
 
         bb = ByteBuffer.wrap(new byte[8]);
         bb2 = ByteBuffer.wrap(new byte[8]);
+
+        active = true;
 
         // Start threads for sending info
         new Thread(new Sender()).start();
@@ -261,11 +264,7 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         @Override
         public void run() {
             try {
-                while(getClass().getSimpleName().equals("Sender")) {
-                    WifiManager wfMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    if(Objects.requireNonNull(wfMan).getConnectionInfo().getSSID().contains("TUCwireless"))
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
+                while(active) {
                     bq.put(bb);
                     bq2.put(bb2);
                 }
@@ -283,22 +282,24 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         super.onResume();
         hideSystemUI();
         companionListener();
+        active = true;
 
-        ct.notify();
+//        if(ct.isAlive())
+//            ct.notify();
     }
 
     @Override
     public void onPause(){
-        try{
-            synchronized (ct){
-                while(getApplicationContext() != this){
-                    ct.wait();
-                }
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
+//        try{
+//            synchronized (ct){
+//                while(getApplicationContext() != this){
+//                    ct.wait();
+//                }
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+        active = false;
         super.onPause();
     }
 
