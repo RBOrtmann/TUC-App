@@ -263,8 +263,18 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
     private class Sender implements Runnable{
         @Override
         public void run() {
+            ByteBuffer oldbb = ByteBuffer.wrap(new byte[8]);
+            ByteBuffer oldbb2 = ByteBuffer.wrap(new byte[8]);
             try {
                 while(active) {
+//                    if(oldbb.compareTo(bb) != 0)
+//                        bq.put(bb);
+//                    if(oldbb2.compareTo(bb2) != 0)
+//                        bq2.put(bb2);
+
+//                    oldbb = bb;
+//                    oldbb2 = bb2;
+
                     bq.put(bb);
                     bq2.put(bb2);
                 }
@@ -283,22 +293,10 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         hideSystemUI();
         companionListener();
         active = true;
-
-//        if(ct.isAlive())
-//            ct.notify();
     }
 
     @Override
     public void onPause(){
-//        try{
-//            synchronized (ct){
-//                while(getApplicationContext() != this){
-//                    ct.wait();
-//                }
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
         active = false;
         super.onPause();
     }
