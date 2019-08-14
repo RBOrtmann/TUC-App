@@ -51,7 +51,7 @@ public class ControllerActivity extends AppCompatActivity {
     private static boolean active = false;
 
 /*
-PTO, Lights, and Front/back should be on a separate message that sends integers instead of just quick presses
+Light drawable will desync when activating hazards. Need to find out how to implement SOS toggle
  */
 
     @Override
@@ -93,8 +93,8 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
                                 bb2.put(4, (byte)1); break;
                             case R.id.fabLights:
                                 bb2.put(5, (byte)1); break;
-                            case R.id.fabPTO:
-                                bb2.put(6, (byte)1); break;
+//                            case R.id.fabPTO:
+//                                bb2.put(6, (byte)1); break;
                         }
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                         switch (view.getId()){
@@ -111,9 +111,9 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
                             case R.id.fabLights:
                                 bb2.put(5, (byte)0);
                                 toggleLights(); break;
-                            case R.id.fabPTO:
-                                bb2.put(6, (byte)0);
-                                ptoCounter(); break;
+//                            case R.id.fabPTO:
+//                                bb2.put(6, (byte)0);
+//                                ptoCounter(); break;
                         }
                         view.performClick();
                     }
@@ -128,19 +128,26 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
         findViewById(R.id.fabTiltDown).setOnTouchListener(otl);
         findViewById(R.id.fabTiltUp).setOnTouchListener(otl);
         findViewById(R.id.fabLights).setOnTouchListener(otl);
-        findViewById(R.id.fabPTO).setOnTouchListener(otl);
+        //findViewById(R.id.fabPTO).setOnTouchListener(otl);
 
         // TOGGLES
         View.OnClickListener ocl = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.fabFrontBack) {
-                    frontBack();
+                switch(view.getId()){
+                    case R.id.fabFrontBack:
+                        frontBack(); break;
+//                    case R.id.fabLights:
+//                        toggleLights(); break;
+                    case R.id.fabPTO:
+                        ptoCounter(); break;
                 }
             }
         };
 
         findViewById(R.id.fabFrontBack).setOnClickListener(ocl);
+        findViewById(R.id.fabLights).setOnClickListener(ocl);
+        findViewById(R.id.fabPTO).setOnClickListener(ocl);
 
         // JOYSTICK
         JoystickView joystick = findViewById(R.id.joystickView);
@@ -148,7 +155,7 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
             @Override
             public void onMove(int angle, int strength) {
                 bb.putInt(0, angle);
-                bb.putInt(4, strength);
+                bb.put(4, (byte)strength);
             }
         });
 
@@ -224,6 +231,8 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
             ptoCount = 0;
 
         tv.setText(getString(R.string.pto_formatted, Integer.toString(ptoCount)));
+
+        bb.put(6, (byte)ptoCount);
     }
 
     // Switches the attachment mode to front if back, and to back if front, returning the value as an integer
@@ -236,7 +245,7 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
                         ? getDrawable(R.drawable.ic_swap_arrows_back)
                         : getDrawable(R.drawable.ic_swap_arrows_front));
 
-        bb2.put(7, (byte)(frontBack ? 1 : 0));
+        bb.put(7, (byte)(frontBack ? 1 : 0));
     }
 
     // Increments the counter that keeps track of the light mode and returns it
@@ -257,6 +266,8 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
             case 3:
                 fab.setImageDrawable(getDrawable(R.drawable.ic_car_light_both)); break;
         }
+
+        bb.put(5, (byte)lightMode);
     }
 
     // Subclass that continuously enqueues the ByteBuffer into the BlockingQueue
@@ -268,12 +279,12 @@ PTO, Lights, and Front/back should be on a separate message that sends integers 
             try {
                 while(active) {
 //                    if(oldbb.compareTo(bb) != 0)
-//                        bq.put(bb);
+//                       Log.d("SenderChange", "Change confirmed\t" + oldbb.compareTo(bb));
 //                    if(oldbb2.compareTo(bb2) != 0)
-//                        bq2.put(bb2);
+//                        Log.d("SenderChange", "Change confirmed\t" + oldbb2.compareTo(bb2));
 
-//                    oldbb = bb;
-//                    oldbb2 = bb2;
+                    oldbb = bb;
+                    oldbb2 = bb2;
 
                     bq.put(bb);
                     bq2.put(bb2);
