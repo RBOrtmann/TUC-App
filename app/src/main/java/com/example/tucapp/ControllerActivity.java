@@ -93,8 +93,6 @@ Light drawable will desync when activating hazards. Need to find out how to impl
                                 bb2.put(4, (byte)1); break;
                             case R.id.fabLights:
                                 bb2.put(5, (byte)1); break;
-//                            case R.id.fabPTO:
-//                                bb2.put(6, (byte)1); break;
                         }
                     } else if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP){
                         switch (view.getId()){
@@ -111,9 +109,6 @@ Light drawable will desync when activating hazards. Need to find out how to impl
                             case R.id.fabLights:
                                 bb2.put(5, (byte)0);
                                 toggleLights(); break;
-//                            case R.id.fabPTO:
-//                                bb2.put(6, (byte)0);
-//                                ptoCounter(); break;
                         }
                         view.performClick();
                     }
@@ -128,7 +123,6 @@ Light drawable will desync when activating hazards. Need to find out how to impl
         findViewById(R.id.fabTiltDown).setOnTouchListener(otl);
         findViewById(R.id.fabTiltUp).setOnTouchListener(otl);
         findViewById(R.id.fabLights).setOnTouchListener(otl);
-        //findViewById(R.id.fabPTO).setOnTouchListener(otl);
 
         // TOGGLES
         View.OnClickListener ocl = new View.OnClickListener() {
@@ -137,8 +131,6 @@ Light drawable will desync when activating hazards. Need to find out how to impl
                 switch(view.getId()){
                     case R.id.fabFrontBack:
                         frontBack(); break;
-//                    case R.id.fabLights:
-//                        toggleLights(); break;
                     case R.id.fabPTO:
                         ptoCounter(); break;
                 }

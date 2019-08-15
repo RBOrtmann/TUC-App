@@ -20,6 +20,9 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 
 public class ControllerThread extends Thread {
@@ -63,8 +66,11 @@ public class ControllerThread extends Thread {
             DatagramSocket ds = new DatagramSocket();
             DatagramPacket dp = new DatagramPacket(bb.array(), bb.array().length, address);
 
-            while(this.isAlive()){ // should this just be while(true)?
+            Timer timer = new Timer();
+            TimerTask hbeat = new Heartbeat();
+            timer.schedule(hbeat, 10, 500);
 
+            while(this.isAlive()){ // should this just be while(true)?
                 // If no longer connected, wait until the connection is reestablished
                 reconnect(ds);
 
@@ -83,6 +89,12 @@ public class ControllerThread extends Thread {
 
                 // Construct the button data
                 bb = bq2.take();
+
+                if(heartbeat)
+                    bb.put(6, (byte)1);
+                else
+                    bb.put(6, (byte)0);
+
                 Log.d("buttonBuffer", Arrays.toString(bb.array()));
                 outputStreamButtons.write(buttonsPrefix);
                 outputStreamButtons.write(bb.array());
@@ -136,5 +148,13 @@ public class ControllerThread extends Thread {
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    private boolean heartbeat = false;
+    private class Heartbeat extends TimerTask{
+        @Override
+        public void run() {
+            heartbeat = !heartbeat;
+        }
     }
 }
