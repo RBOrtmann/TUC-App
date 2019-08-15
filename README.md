@@ -20,3 +20,16 @@ Once installed, the app can be found in the app drawer. Launching the app displa
 ## Notes
 
 Although I am reasonably familiar with Java, I am, admittedly, a novice Android developer. As such, this app by no means approaches perfection and could be improved upon in many areas with respect to both visual style and programming practice. To be clear, this was a first attempt at understanding the Android API and I merely cobbled together an app with the necessary functionality in just a couple months. Constructive criticism and feedback are always welcome and should be given in as much detail as possible under the 'Issues' tab of this repository.
+
+### List of Needed Improvements
+* App currently sends as many packets as possible when in `ControllerActivity`. It should only send a few packets when there is an update to the data.
+* App disconnects when the device goes to sleep or when opening the app switcher. It should stay connected unless the user exits the app or logs out.
+* App will remain in `ControllerActivity` even when it disconnects for one of the above reasons. If it disconnects for more than a couple of seconds for any reason, it should take the user back to the selection screen.
+* `ControllerActivity` and `ControllerThread` are decipherable but too messy in my opinion. They should be refactored and cleaned up where possible.
+* The layout of `ControllerActivity` is decent but could be improved in several areas. The buttons and joystick should inflate for larger screen sizes.
+* There is currently no way to activate the SOS lights from the app. This functionality should be added.
+* The app does not currently receive status updates from the TUC. It should, and update the UI accordingly.
+  * Related to this, toggling the hazards desynchronizes the light drawable from the actual state of the lights on the TUC. This should be fixed.
+  * The "TUC Mode" setting is shown on the Settings screen, but it is not currently being sent over to the TUC. It should be synchronized with the TUC state.
+  
+I'm sure there are many other improvements that can and should be made; these are only the ones that immediately came to mind and must be addressed before the app is ready to ship.
