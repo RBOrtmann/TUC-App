@@ -22,7 +22,7 @@ Once installed, the app can be found in the app drawer. Launching the app displa
 Although I am reasonably familiar with Java, I am, admittedly, a novice Android developer. As such, this app by no means approaches perfection and could be improved upon in many areas with respect to both visual style and programming practice. To be clear, this was a first attempt at understanding the Android API and I merely cobbled together an app with the necessary functionality in just a couple months. Constructive criticism and feedback are always welcome and should be given in as much detail as possible under the 'Issues' tab of this repository.
 
 ### List of Needed Improvements
-* App currently sends as many packets as possible when in `ControllerActivity`. It should only send a few packets when there is an update to the data.
+* App currently sends as many packets as possible when in `ControllerActivity`. It should only send a few packets when there is an update from the "resting state" of the joystick and attachments *or* when there is a change in the PTO or Lights mode.
 * App disconnects when the device goes to sleep or when opening the app switcher. It should stay connected unless the user exits the app or logs out.
 * App will remain in `ControllerActivity` even when it disconnects for one of the above reasons. If it disconnects for more than a couple of seconds for any reason, it should take the user back to the selection screen.
 * `ControllerActivity` and `ControllerThread` are decipherable but too messy in my opinion. They should be refactored and cleaned up where possible.
