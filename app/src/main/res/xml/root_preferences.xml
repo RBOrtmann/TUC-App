@@ -37,6 +37,12 @@
             app:summaryOff="@string/dark_mode_summary_off"
             app:summaryOn="@string/dark_mode_summary_on"/>
 
+        <SwitchPreferenceCompat
+            app:key="demo_mode"
+            app:title="Demo Mode"
+            app:summaryOff="Demo mode disabled"
+            app:summaryOn="Demo mode enabled"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/tuc_settings_header">
