@@ -66,13 +66,13 @@ public class SettingsActivity extends AppCompatActivity {
                     if(preference.equals(findPreference("dark_mode"))){
                         if(newValue.equals(true)){
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            return true;
+                            //return true;
                         } else if(newValue.equals(false)){
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            return true;
+                            //return true;
                         }
                     }
-                    return false;
+                    return true;
                 }
             });
         }
